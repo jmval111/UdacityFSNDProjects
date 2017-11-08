@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>New Category</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+	<div id="form-container">
+		<h1>Add New Category</h1>
+			<form action="/category/add" method="POST" id="usrform">
+				<label for="name">Name</label><br>
+				<input id="name" type="text" name="name" required><br>
+			
+				<label for="description">Description</label><br>
+				<textarea id="description" name="description" form="usrform"></textarea><br>
+				<input type="submit" value="Create">
+				<a id="cancel" href="{{url_for('showCategories')}}">Cancel</a>
+			</form>
+	</div>
+</body>
+</html>

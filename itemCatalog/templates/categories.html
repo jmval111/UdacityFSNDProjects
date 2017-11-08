@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Categories</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+	
+	<div id="main-container">
+		<header id="head-container">
+			<p>Categories</p>
+		</header>
+		<p id="select-tab"><a id="new-item" href="{{url_for('addCategory')}}">Create New Category</a></p>
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+			<div class="alert">
+				<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+				{{message}}
+			</div>
+			{% endfor %}
+		{% endif %}
+		{% endwith %}
+		<div id="item-list">
+			{% if categories %}
+				{% for category in categories %}
+					<section class="item">
+						<h2 class="item_name">{{category.name}}</h2>
+						<p class="item_description">{{category.description}}</p>
+						<div class="selection-panel">
+							<a href="{{url_for('showItems', category_id = category.id)}}">Items</a>
+							<a href="{{url_for('editCategory', category_id = category.id)}}">Edit</a>
+							<a href="{{url_for('deleteCategory', category_id = category.id)}}">Delete</a>
+						</div>
+					</section>
+				{% endfor %}
+			{% else %}
+				<p>There are no categories</p>
+			{% endif %}
+		</div>
+	</div>
+</body>
+</html>
