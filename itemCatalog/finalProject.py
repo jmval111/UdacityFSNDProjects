@@ -4,11 +4,6 @@ app = Flask(__name__)
 
 
 @app.route('/')
-@app.route('/main')
-def showMainPage():
-    return 'This page displays categories and latest items'
-
-
 @app.route('/categories')
 def showCategories():
     return 'This page displays all categories.'
@@ -28,7 +23,7 @@ def editCategory(category_id):
 def deleteCategory(category_id):
     return 'This page is to delete the category {}'.format(category_id)
 
-
+@app.route('/category/<int:category_id>')
 @app.route('/category/<int:category_id>/items')
 def showItems(category_id):
     return 'This page is to display all items of the category {}'\
@@ -41,6 +36,7 @@ def addItem(category_id):
            .format(category_id)
 
 
+@app.route('/category/<int:category_id>/item/<int:item_id>')
 @app.route('/category/<int:category_id>/item/<int:item_id>/details')
 def showItemDetails(category_id, item_id):
     return 'This page is to show details of item {} of the category {}'\
