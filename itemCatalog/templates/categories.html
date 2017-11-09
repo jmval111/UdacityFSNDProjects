@@ -28,6 +28,7 @@
 				{% for category in categories %}
 					<section class="item">
 						<h2 class="item_name">{{category.name}}</h2>
+						<p class="item_count">Total Items: {{category.items|length}}</p>
 						<p class="item_description">{{category.description}}</p>
 						<div class="selection-panel">
 							<a href="{{url_for('showItems', category_id = category.id)}}">Items</a>
