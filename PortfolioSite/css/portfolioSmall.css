@@ -1,0 +1,23 @@
+body {
+	font-size: 14px;
+}
+
+#header {
+	flex-direction: column; /*stack logo name vertically */
+	width: 100%;
+	text-align: center;
+}
+
+#devName {
+	text-align: center;
+}
+
+#slogan {
+	margin: 0px;
+}
+
+#logo img {
+	max-width: 50px;
+	max-height: 50px;
+}
+
