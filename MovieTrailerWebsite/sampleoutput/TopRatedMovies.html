@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Fresh Tomatoes!</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+    <script type="text/javascript" charset="utf-8">
+        // Pause the video when the modal is closed
+        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+            // Remove the src so the player itself gets removed, as this is the only
+            // reliable way to ensure the video stops playing in IE
+            $("#trailer-video-container").empty();
+        });
+        // Start playing the video whenever the trailer modal is opened
+        $(document).on('click', '.youtube-play-image', function (event) {
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
+              'id': 'trailer-video',
+              'type': 'text-html',
+              'src': sourceUrl,
+              'frameborder': 0
+            }));
+        });
+        // Animate in the movies when the page loads
+        $(document).ready(function () {
+          $('.movie-card').hide().first().show("fast", function showNext() {
+            $(this).next("div").show("fast", showNext);
+          });
+        });
+    </script>
+</head>
+
+  <body>
+    <!-- Trailer Video Modal -->
+    <div class="modal" id="trailer">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          </a>
+          <div class="scale-media" id="trailer-video-container">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Page Content -->
+
+    <!-- logo text and navigation list -->
+    <div class="header-container">
+	<div class="logo"><span>MOVIES</span></div>
+            <div class="custom-navigation">
+	    	<ul>
+                    <li><a  href="UpcomingMovies.html">Upcoming</a></li>
+                    <li><a class="active" href="TopRatedMovies.html">Top Rated</a></li>
+		</ul>
+	    </div>
+    </div>
+    <div class="movie-container">
+      
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/2gvbZMtV1Zsl7FedJa5ysbpBx2G.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Dilwale Dulhania Le Jayenge</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="c25GKl5VNeY" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>9.1</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Raj is a rich, carefree, happy-go-lucky second generation NRI. Simran is the daughter of Chaudhary Baldev Singh, who in spite of being an NRI is very strict about adherence to Indian values. Simran has left for India to be married to her childhood fiancé. Raj leaves for India with a mission at his hands, to claim his lady love under the noses of her whole family. Thus begins a saga.</p>
+			<strong>Release Date: </strong><span class="genre-span">1995-10-20</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/9O7gLzmreU0nGkIB6K3BsJbzvNv.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>The Shawshank Redemption</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="K_tLp7T6U1c" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.5</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Framed in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.</p>
+			<strong>Release Date: </strong><span class="genre-span">1994-09-23</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/xq1Ugd62d23K2knRUx6xxuALTZB.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Your Name.</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="o4-URMnBOPU" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.5</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">High schoolers Mitsuha and Taki are complete strangers living separate lives. But one night, they suddenly switch places. Mitsuha wakes up in Taki’s body, and he in hers. This bizarre occurrence continues to happen randomly, and the two must adjust their lives around each other.</p>
+			<strong>Release Date: </strong><span class="genre-span">2016-08-26</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/rPdtLWNsZmAtoZl9PK7S2wE3qiS.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>The Godfather</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="fBNpSRtfIUA" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.5</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.</p>
+			<strong>Release Date: </strong><span class="genre-span">1972-03-14</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/yPisjyLweCl1tbgwgtzBCNCBle.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Schindler's List</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="bJcLRFWxRno" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">The true story of how businessman Oskar Schindler saved over a thousand Jewish lives from the Nazis while they worked as slaves in his factory during World War II.</p>
+			<strong>Release Date: </strong><span class="genre-span">1993-11-29</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/dL11DBPcRhWWnJcFXl9A07MrqTI.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Spirited Away</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="ByXuk9QqQkk" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A young girl, Chihiro, becomes trapped in a strange new world of spirits. When her parents undergo a mysterious transformation, she must call upon the courage she never knew she had to free her family.</p>
+			<strong>Release Date: </strong><span class="genre-span">2001-07-20</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/he609rnU3tiwBjRklKNa4n2jQSd.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Black Mirror: White Christmas</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="P3RHYNZplWg" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">This feature-length special consists of three interwoven stories. In a mysterious and remote snowy outpost, Matt and Potter share a Christmas meal, swapping creepy tales of their earlier lives in the outside world. Matt is a charismatic American trying to bring the reserved, secretive Potter out of his shell. But are both men who they appear to be? A woman gets thrust into a nightmarish world of 'smart' gadgetry. Plus a look at what would happen if you could 'block' people in real life.</p>
+			<strong>Release Date: </strong><span class="genre-span">2014-12-16</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/lIv1QinFqz4dlp5U4lQ6HaiskOZ.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Whiplash</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="fHAfUSBc0pg" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Under the direction of a ruthless instructor, a talented young drummer begins to pursue perfection at any cost, even his humanity.</p>
+			<strong>Release Date: </strong><span class="genre-span">2014-10-10</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/bVq65huQ8vHDd1a4Z37QtuyEvpA.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>The Godfather: Part II</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="9O1Iy9od7-A" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">In the continuing saga of the Corleone crime family, a young Vito Corleone grows up in Sicily and in 1910s New York. In the 1950s, Michael Corleone attempts to expand the family business into Las Vegas, Hollywood and Cuba.</p>
+			<strong>Release Date: </strong><span class="genre-span">1974-12-20</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/adw6Lq9FiC9zjYEpOqfq03ituwp.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Fight Club</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="BdJKm16Co6M" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground "fight clubs" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.</p>
+			<strong>Release Date: </strong><span class="genre-span">1999-10-15</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/wJUJROdLOtOzMixkjkx1aaZGSLl.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>In a Heartbeat</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="2REkk9SCRn0" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A closeted boy runs the risk of being outed by his own heart after it pops out of his chest to chase down the boy of his dreams.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-06-01</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/dM2w364MScsjFf8pfMbaWUcWrR.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Pulp Fiction</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="s7EdQ4FqbhY" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A burger-loving hit man, his philosophical partner, a drug-addled gangster's moll and a washed-up boxer converge in this sprawling, comedic crime caper. Their adventures unfurl in three stories that ingeniously trip back and forth in time.</p>
+			<strong>Release Date: </strong><span class="genre-span">1994-09-10</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/f7DImXDebOs148U4uPjI61iDvaK.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Life Is Beautiful</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="pAYEQP8gx3w" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A touching story of an Italian book seller of Jewish ancestry who lives in his own little fairy tale. His creative and happy life would come to an abrupt halt when his entire family is deported to a concentration camp during World War II. While locked up he tries to convince his son that the whole thing is just a game.</p>
+			<strong>Release Date: </strong><span class="genre-span">1997-12-20</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>The Dark Knight</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="kmJLuwP3MbY" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.</p>
+			<strong>Release Date: </strong><span class="genre-span">2008-07-16</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/2Sns5oMb356JNdBHgBETjIpRYy9.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>One Flew Over the Cuckoo's Nest</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="6aJT5fGCRPk" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">While serving time for insanity at a state mental hospital, implacable rabble-rouser, Randle Patrick McMurphy inspires his fellow patients to rebel against the authoritarian rule of head nurse, Mildred Ratched.</p>
+			<strong>Release Date: </strong><span class="genre-span">1975-11-18</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/81d8oyEFgj7FlxJqSDXWr8JH8kV.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Psycho</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="kf8X-MtsufY" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.2</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">When larcenous real estate clerk Marion Crane goes on the lam with a wad of cash and hopes of starting a new life, she ends up at the notorious Bates Motel, where manager Norman Bates cares for his housebound mother. The place seems quirky, but fine… until Marion decides to take a shower.</p>
+			<strong>Release Date: </strong><span class="genre-span">1960-06-16</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/fqP3Q7DWMFqW7mh11hWXbNwN9rz.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Once Upon a Time in America</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="mzhX2PD6Srw" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.2</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A former Prohibition-era Jewish gangster returns to the Lower East Side of Manhattan over thirty years later, where he once again must confront the ghosts and regrets of his old life.</p>
+			<strong>Release Date: </strong><span class="genre-span">1984-02-16</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/yE5d3BUhE8hCnkMUJOo1QDoOGNz.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Forrest Gump</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="VVN82P8dN7I" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.2</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A man with a low IQ has accomplished great things in his life and been present during significant historic events - in each case, far exceeding what anyone imagined he could do. Yet, despite all the things he has attained, his one true love eludes him. 'Forrest Gump' is the story of a man who rose above his challenges, and who proved that determination, courage, and love are more important than ability.</p>
+			<strong>Release Date: </strong><span class="genre-span">1994-07-06</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/oFwzvRgfxJc0FUr2mwYTi10dk3G.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Sunset Boulevard</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="klM1GSJsblQ" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.2</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A hack screenwriter writes a screenplay for a former silent-film star who has faded into Hollywood obscurity.</p>
+			<strong>Release Date: </strong><span class="genre-span">1950-08-10</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/pyCMEIAtMPpWTVwZTajcbCIBI3u.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Le Trou</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="DtetfUYMWlM" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>8.2</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">An imprisoned man, awaiting trial for the attempted murder of his wife, is transferred to another cell, where his fellow prisoners are planning a jailbreak. He decides to go along with the elaborate plan, and the cellmates attempt to tunnel their way to freedom. Le Trou represents the last film of director Jacques Becker, who died shortly after its completion.</p>
+			<strong>Release Date: </strong><span class="genre-span">1960-03-18</span><br/><br/>
+		</div>
+		
+    </div>
+
+    </div>
+    <!-- fixed footer -->
+    <div id="about">
+		<span>Developed by Viraj Bhosle. </span><span>Information courtesy of <a href="https://www.themoviedb.org">TMDB</a></span>
+    </div>
+  </body>
+</html>

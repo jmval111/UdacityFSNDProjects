@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Fresh Tomatoes!</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+    <script type="text/javascript" charset="utf-8">
+        // Pause the video when the modal is closed
+        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+            // Remove the src so the player itself gets removed, as this is the only
+            // reliable way to ensure the video stops playing in IE
+            $("#trailer-video-container").empty();
+        });
+        // Start playing the video whenever the trailer modal is opened
+        $(document).on('click', '.youtube-play-image', function (event) {
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
+              'id': 'trailer-video',
+              'type': 'text-html',
+              'src': sourceUrl,
+              'frameborder': 0
+            }));
+        });
+        // Animate in the movies when the page loads
+        $(document).ready(function () {
+          $('.movie-card').hide().first().show("fast", function showNext() {
+            $(this).next("div").show("fast", showNext);
+          });
+        });
+    </script>
+</head>
+
+  <body>
+    <!-- Trailer Video Modal -->
+    <div class="modal" id="trailer">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          </a>
+          <div class="scale-media" id="trailer-video-container">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Page Content -->
+
+    <!-- logo text and navigation list -->
+    <div class="header-container">
+	<div class="logo"><span>MOVIES</span></div>
+            <div class="custom-navigation">
+	    	<ul>
+                    <li><a class="active" href="UpcomingMovies.html">Upcoming</a></li>
+                    <li><a  href="TopRatedMovies.html">Top Rated</a></li>
+		</ul>
+	    </div>
+    </div>
+    <div class="movie-container">
+      
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/aMpyrCizvSdc0UIMblJ1srVgAEF.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Blade Runner 2049</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="haXvp8M9Cog" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>7.7</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Thirty years after the events of the first film, a new blade runner, LAPD Officer K, unearths a long-buried secret that has the potential to plunge what's left of society into chaos. K's discovery leads him on a quest to find Rick Deckard, a former LAPD blade runner who has been missing for 30 years.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-04</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/qmi2dsuoyzZdJ0WFZYQazbX8ILj.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>mother!</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="_0NF2YP7SU8" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>6.9</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A couple's relationship is tested when uninvited guests arrive at their home, disrupting their tranquil existence.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-09-13</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/o40BAqdTQHiN3cUfpgieDUYI71z.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>American Assassin</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="XwHAGKxsbcg" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>5.1</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Following the murder of his fiancée, Mitch Rapp trains under the instruction of Cold War has-been Stan Hurley. The pair then is enlisted to investigate a wave of apparently random attacks on military and civilian targets.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-09-14</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/FFm2DNpzfPDvIy8DKSyZ71et8W.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Happy Death Day</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="ntxS1bBg5o0" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>7.2</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A college student relives the day of her murder over and over again as she tries to discover her killer's identity.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-12</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/avy7IR8UMlIIyE2BPCI4plW4Csc.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Thor: Ragnarok</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="ue80QwXMRHg" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>0</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Thor is imprisoned on the other side of the universe and finds himself in a race against time to get back to Asgard to stop Ragnarok, the destruction of his homeworld and the end of Asgardian civilization, at the hands of an all-powerful new threat, the ruthless Hela.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-25</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/nrsx0jEaBgXq4PWo7SooSnYJTv.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Geostorm</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="EuOlYPSEzSc" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>5.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Gerard Butler playing a stubborn but charming satellite designer who, when the world’s climate-controlling satellites malfunction, has to work together with his estranged brother to save the world from a man-made storm of epic proportions. A trip into space follows, while on Earth a plot to assassinate the president begins to unfold.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-19</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/zUbUtxiTdEgWnkXY945gtYYqBZ1.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Jigsaw</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="UG7nL8DwzvA" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>7.8</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Dead bodies begin to turn up all over the city, each meeting their demise in a variety of grisly ways. All investigations begin to point the finger at deceased killer John Kramer.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-20</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/lC7WdUNLOJI3sllaDGNdFy2GT8g.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Only the Brave</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="DSHk_BHQxp0" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>6.5</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Members of the Granite Mountain Hotshots battle deadly wildfires to save an Arizona town.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-19</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/lZ9I4Lv0QtdrykZ8pF42KJAdcg4.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>The Killing of a Sacred Deer</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="CQFdGfwChtw" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>0</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A teenager's attempts to bring a brilliant surgeon into his dysfunctional family take an unexpected turn.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-20</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/kV9R5h0Yct1kR8Hf8sJ1nX0Vz4x.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Atomic Blonde</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="HNKX2Ymfhbg" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>6.2</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">An undercover MI6 agent is sent to Berlin during the Cold War to investigate the murder of a fellow agent and recover a missing list of double agents.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-07-26</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/yjDAt9K3FKU1itABgIXl6YvLsVE.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Wonderstruck</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="qMNW-5SV7Cc" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>0</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">The story of a young boy in the Midwest is told simultaneously with a tale about a young girl in New York from fifty years ago as they both seek the same mysterious connection.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-20</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/bQHgpTVsAWjNQWS0frsl7DlzLX1.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>The Snowman</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="c44kam_8N3I" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>4.9</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Detective Harry Hole investigates the disappearance of a woman whose pink scarf is found wrapped around an ominous looking snowman.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-12</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/fzsaNUcRH0cV2gg5rjQH83ZEI8M.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Wind River</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="CZgN0dpFoaE" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>7.4</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">An FBI agent teams with the town's veteran game tracker to investigate a murder that occurred on a Native American reservation.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-08-03</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/o6EsOqITcSzcdwD1zxBM9imdxjr.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>What Happened to Monday</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="idZPTuwcMJA" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>7.3</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">In a world where families are limited to one child due to overpopulation, a set of identical septuplets must avoid being put to a long sleep by the government and dangerous infighting while investigating the disappearance of one of their own.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-08-18</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/fBDLdEraxCBKGmOPb6pJPYiDQh1.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Unlocked</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="0-t9iIpsbgA" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>6.2</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">After failing to apprehend the terrorist behind a Paris attack that claimed dozens of lives, CIA agent Alice Racine is forced to live in London as a caseworker. Her mentor unexpectedly calls her back into action when the CIA discovers that another attack is imminent. Alice soon learns that the classified information she's uncovered has been compromised. Running for her life, she turns to a former soldier to help her prevent a lethal biological attack on the citizens of London.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-04-27</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/tDgxknTVwrScxpCYyGUjXSn5NRk.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Jungle</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="-imfwYLne14" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>0</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">A mysterious guide escorts an enthusiastic adventurer and his friend into the Amazon jungle. Their journey turns into a terrifying ordeal as the darkest elements of human nature and the deadliest threats of the wild force them to fight for survival.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-20</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/qSJkhjUq8IpHBUJ9azQPxkblftV.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>The Carmilla Movie</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="g2wZdJ0KKyk" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>0</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">It has been five years since Laura  and Carmilla vanquished the apocalypse and Carmilla became a bonafide mortal human. They have settled in to a cozy apartment in downtown Toronto; Laura continues to hone her journalism skills while Carmilla adjusts to a non-vampire lifestyle. Their domestic bliss is suddenly ruptured when Carmilla begins to show signs of “re-vamping” – from a fondness for bloody treats to accidental biting – while Laura has started having bizarre, ghostly dreams. The couple must now enlist their old friends from Silas University to uncover the unknown supernatural threat and save humanity – including Carmilla’s.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-26</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/3XNfYTW4XGscI81nXMSWGsQ8cpu.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>The Mountain Between Us</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="8ffEs6GfMSI" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>7.1</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Stranded after a tragic plane crash, two strangers must forge a connection to survive the extreme elements of a remote snow covered mountain. When they realize help is not coming, they embark on a perilous journey across the wilderness.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-05</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/8eZynKoLiPq9b6DQGLOFHt6mZPv.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>6 Below: Miracle on the Mountain</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="Lz030oqR7GI" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>4.6</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">An adrenaline seeking snowboarder gets lost in a massive winter storm in the back country of the High Sierras where he is pushed to the limits of human endurance and forced to battle his own personal demons as he fights for survival....</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-10-13</span><br/><br/>
+		</div>
+		
+    </div>
+
+    <div class="movie-card">
+		<div class="movie-poster">
+			<img class="poster-image" src="https://image.tmdb.org/t/p/w185/9rtrRGeRnL0JKtu9IMBWsmlmmZz.jpg" />
+		</div>
+		<div class="movie-info">
+			<h2>Justice League</h2>
+			<img class="youtube-play-image" src="icons/play.png" data-trailer-youtube-id="3cxixDgHUYw" data-toggle="modal" data-target="#trailer"/>
+			<div class="rating"><span><strong>0</strong></span></div>
+			<h4>Overview</h4>
+			<p class="overview-para">Fueled by his restored faith in humanity and inspired by Superman's selfless act, Bruce Wayne and Diana Prince assemble a team of metahumans consisting of Barry Allen, Arthur Curry, and Victor Stone to face the catastrophic threat of Steppenwolf and the Parademons who are on the hunt for three Mother Boxes on Earth.</p>
+			<strong>Release Date: </strong><span class="genre-span">2017-11-15</span><br/><br/>
+		</div>
+		
+    </div>
+
+    </div>
+    <!-- fixed footer -->
+    <div id="about">
+		<span>Developed by Viraj Bhosle. </span><span>Information courtesy of <a href="https://www.themoviedb.org">TMDB</a></span>
+    </div>
+  </body>
+</html>

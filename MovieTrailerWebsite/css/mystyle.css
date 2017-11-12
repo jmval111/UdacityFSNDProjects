@@ -1,0 +1,184 @@
+#trailer .modal-dialog {
+    margin-top: 200px;
+    width: 640px;
+    height: 480px;
+ }
+   
+.hanging-close {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    z-index: 9001;
+ }
+   
+#trailer-video {
+    width: 100%;
+    height: 100%;
+ }
+ 
+.movie-tile {
+    margin-bottom: 20px;
+    padding-top: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+ }
+ 
+.movie-tile:hover {
+    background-color: #EEE;
+    cursor: pointer;
+ }
+
+.scale-media {
+    padding-bottom: 56.25%;
+    position: relative;
+ }
+
+.scale-media iframe {
+    border: none;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: white;
+  }
+/* custom css */
+.movie-container{
+	display: block;
+	width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: Verdana, Geneva, Arial, sans-serif; 
+ }
+
+.movie-card{
+	width: 48%;
+	height: 352px;
+	margin: 8px;
+	background-color: #ffff;
+	box-shadow: 5px 5px 10px 0px;
+	border: 2px none;
+	border-radius: 10px;
+	display: inline-block;
+ }
+
+.poster-image{
+	width: 220px;
+	height: 342px;
+	padding: 5px;
+	border: 2px none;
+	border-radius: 25px;
+ }
+
+.movie-poster{
+	height: 100%;
+	float: left;
+	margin-right: 10px;
+ }
+
+.movie-info{
+	height: 80%;
+ }
+
+.movie-info p,h4{
+	margin: 0 ;
+ }
+
+.movie-info h2{
+	height: 22%;
+	overflow:hidden;
+ }
+
+p,.genre-span{
+	font-size: 12px;
+	color: #666666;
+	overflow: hidden;
+	}
+	
+.overview-para{
+	font-size: 12px;
+	color: #666666;
+	height: 25%;
+	overflow-y: scroll;
+	}
+
+.movie-info-footer{
+	display: inline-block;
+	}
+
+.youtube-play-image{
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	}
+
+.rating{
+	background-image: url("../icons/star.png");
+	background-repeat: no-repeat;
+	background-size:contain;
+	display:inline-block;
+	width: 40px; 
+	height: 40px;
+	vertical-align: top;
+	}
+
+.rating span{
+	display: block;
+	padding: 8px;
+	font-size: 14px;
+	}
+			
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+	}
+
+li {
+	float: left;
+}
+
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	}
+
+li a:hover:not(.active) {
+	background-color: #15adbe;
+	}
+
+.active {
+	background-color: #15adbe;
+	}
+
+.logo{
+	margin-top:0; 
+	background-color: #333; 
+	color: #15adbe;
+	font-family: 'Raleway',sans-serif;
+	font-size: 62px; font-weight: 800; line-height: 72px
+	}
+
+.header-container{
+	position: static;
+	}
+
+#about{
+		background-color: #333;
+		width: 100%;
+		color: white;
+		position: fixed;
+		bottom: 0;
+		text-align: right;
+	}
+	
+#about span{
+	color: white;
+	}
+	
