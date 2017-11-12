@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>New Menu Item</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+	<div id="form-container">
+	<h1>Edit Menu Item {{item.name}}</h1>
+		<form action="{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id = item.id)}}" method="POST">
+			<label for="name">Name</label>
+			<input id="name" type="text" name="name" value="{{item.name}}" required><br>
+			
+			<label for="description">Description</label>
+			<input id="description" type="text" name="description" value="{{item.description}}"><br>
+			
+			<label for="course">Course</label><br>
+			<input id="course" type="radio" name="course" value="Appetizer" {% if item.course == "Appetizer" %} {{'checked=\"checked\"'}} {% endif %}>Appetizer<br>
+			<input id="course" type="radio" name="course" value="Beverage" {% if item.course == "Beverage" %} {{'checked=\"checked\"'}} {% endif %}>Beverage<br>
+			<input id="course" type="radio" name="course" value="Dessert" {% if item.course == "Dessert" %} {{'checked=\"checked\"'}} {% endif %}>Dessert<br>
+			<input id="course" type="radio" name="course" value="Entree" {% if item.course == "Entree" %} {{'checked=\"checked\"'}} {% endif %}>Entree<br>
+			<input type="submit" value="Update">
+			<a id="cancel" href="{{url_for('showMenu', restaurant_id=restaurant.id)}}">Cancel</a>
+		</form>
+	</div>
+</body>
+</html>
