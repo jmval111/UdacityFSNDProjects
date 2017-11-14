@@ -4,7 +4,6 @@
 		<div id="title-container">
 			<p>Categories</p>
 		</div>
-		<p id="select-tab"><a id="new-item" href="{{url_for('addCategory')}}">Create New Category</a></p>
 		{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			{% for message in messages %}

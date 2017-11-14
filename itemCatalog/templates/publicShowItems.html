@@ -4,13 +4,6 @@
 		<header id="head-container">
 			<p>{{category.name}}</p>
 		</header>
-		<div id="select-tab">
-			{% if logged_in_user_id and logged_in_user_id == category.user_id %}
-			<a id="new-item" href="{{url_for('addItem', category_id = category.id)}}">Add New Item</a>
-			<a id="edit-category" href="{{url_for('editCategory', category_id = category.id)}}">Edit Category</a>
-			<a id="delete-category" href="{{url_for('deleteCategory', category_id = category.id)}}">Delete Category</a>
-			{% endif %}
-		</div>
 		{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			{% for message in messages %}
@@ -28,10 +21,6 @@
 				<section class="item">
 					<h3 class="item_name">{{item.name}}</h3>
 					<p class="item_description">{{item.description}}</p>
-					{% if logged_in_user_id and logged_in_user_id == category.user_id %}
-					<a href="{{url_for('editItem', category_id = category.id, item_id = item.id)}}">Edit</a>
-					<a href="{{url_for('deleteItem', category_id = category.id, item_id = item.id)}}">Delete</a>
-					{% endif %}
 				</section>
 				{% endfor %}
 			</section>

@@ -29,18 +29,24 @@ session = DBSession()
 @app.route('/categories')
 def showCategories():
     categories = session.query(Category).all()
+    if 'username' not in login_session:
+        return render_template("publicCategories.html", categories=categories)
     return render_template("categories.html", categories=categories)
 
 
 @app.route('/category/add', methods=['GET', 'POST'])
 def addCategory():
+    if 'username' not in login_session:
+        flash('Please login to add category')
+        return redirect(url_for('showCategories'))
+
     if request.method == 'POST':
         name = request.form['name']
         description = request.form['description']
         if not name:
             flash('Add CategoryError: Name can\'t be empty')
             return redirect(url_for('showCategories'))
-        newCategory = Category(name=name, description=description)
+        newCategory = Category(name=name, description=description, user_id=login_session['user_id'])
         session.add(newCategory)
         session.commit()
         flash('Added Category \'{}\' Successfully!'.format(newCategory.name))
@@ -51,10 +57,19 @@ def addCategory():
 
 @app.route('/category/<int:category_id>/edit', methods=['GET', 'POST'])
 def editCategory(category_id):
+    if 'username' not in login_session:
+        flash('Please login to edit category')
+        return redirect(url_for('showCategories'))
+
     editedCategory = session.query(Category).filter_by(id=category_id).first()
     if not editedCategory:
         flash('Attempt to edit non-existent category')
         return redirect(url_for('showCategories'))
+
+    if login_session['user_id'] != editedCategory.user_id:
+        flash('Sorry, you are not authorized to edit the category \'{}\''
+              .format(editedCategory.name))
+        return redirect(url_for('showItems', category_id=category_id))
 
     if request.method == 'POST':
         if request.form['name']:
@@ -68,16 +83,25 @@ def editCategory(category_id):
         session.commit()
         flash('Edited Category \'{}\'  Successfully'.format(
             editedCategory.name))
-        return redirect(url_for('showCategories'))
+        return redirect(url_for('showItems', category_id=category_id))
     else:
         return render_template("editCategory.html", category=editedCategory)
 
 
 @app.route('/category/<int:category_id>/delete', methods=['GET', 'POST'])
 def deleteCategory(category_id):
+    if 'username' not in login_session:
+        flash('Please login to edit category')
+        return redirect(url_for('showCategories'))
+
     deletedCategory = session.query(Category).filter_by(id=category_id).first()
     if not deletedCategory:
         flash('Attempt to delete non-existent category')
+        return redirect(url_for('showCategories'))
+
+    if login_session['user_id'] != deletedCategory.user_id:
+        flash('Sorry, you are not authorized to delete the category \'{}\''
+              .format(deletedCategory.name))
         return redirect(url_for('showCategories'))
 
     if request.method == 'POST':
@@ -99,11 +123,20 @@ def showItems(category_id):
         return redirect(url_for('showCategories'))
 
     items = session.query(Item).filter_by(category_id=category_id).all()
-    return render_template("showItems.html", category=category, items=items)
+    if 'username' not in login_session or\
+            login_session['user_id'] != category.user_id:
+        return render_template("publicShowItems.html", category=category,
+                               items=items)
+
+    return render_template("showItems.html", category=category, items=items, logged_in_user_id=login_session['user_id'])
 
 
 @app.route('/category/<int:category_id>/item/add', methods=['GET', 'POST'])
 def addItem(category_id):
+    if 'username' not in login_session:
+        flash('Please login to add item')
+        return redirect(url_for('showItems', category_id=category_id))
+
     category = session.query(Category).filter_by(id=category_id).first()
     if not category:
         flash('Attempted operation on non-existent category')
@@ -116,7 +149,7 @@ def addItem(category_id):
             flash('Add ItemError: Name can\'t be empty')
             return redirect(url_for('showItems', category_id=category_id))
         newItem = Item(name=name, description=description,
-                       category_id=category_id)
+                       category_id=category_id, user_id=category.user_id)
         session.add(newItem)
         session.commit()
         flash('Added Item \'{}\' Successfully!'.format(newItem.name))
@@ -128,6 +161,10 @@ def addItem(category_id):
 @app.route('/category/<int:category_id>/item/<int:item_id>/edit',
            methods=['GET', 'POST'])
 def editItem(category_id, item_id):
+    if 'username' not in login_session:
+        flash('Please login to edit item')
+        return redirect(url_for('showItems', category_id=category_id))
+
     category = session.query(Category).filter_by(id=category_id).first()
     if not category:
         flash('Attempted operation on non-existent category')
@@ -137,6 +174,11 @@ def editItem(category_id, item_id):
                                                category_id=category_id).first()
     if not editedItem:
         flash('Attempt to edit non-existent item')
+        return redirect(url_for('showItems', category_id=category_id))
+
+    if login_session['user_id'] != editedItem.user_id:
+        flash('Sorry, you are not authorized to edit the item \'{}\''
+              .format(editedItem.name))
         return redirect(url_for('showItems', category_id=category_id))
 
     if request.method == 'POST':
@@ -159,6 +201,10 @@ def editItem(category_id, item_id):
 @app.route('/category/<int:category_id>/item/<int:item_id>/delete',
            methods=['GET', 'POST'])
 def deleteItem(category_id, item_id):
+    if 'username' not in login_session:
+        flash('Please login to add item')
+        return redirect(url_for('showItems', category_id=category_id))
+
     category = session.query(Category).filter_by(id=category_id).first()
     if not category:
         flash('Attempted operation on non-existent category')
@@ -168,6 +214,11 @@ def deleteItem(category_id, item_id):
         filter_by(id=item_id, category_id=category_id).first()
     if not deletedItem:
         flash('Attempt to delete non-existent item')
+        return redirect(url_for('showItems', category_id=category_id))
+
+    if login_session['user_id'] != deletedItem.user_id:
+        flash('Sorry, you are not authorized to delete the item \'{}\''
+              .format(deletedItem.name))
         return redirect(url_for('showItems', category_id=category_id))
 
     if request.method == 'POST':
@@ -260,7 +311,6 @@ def gconnect():
     answer = requests.get(userinfo_url, params=params)
 
     data = answer.json()
-
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
@@ -268,6 +318,10 @@ def gconnect():
     # See if user exists, if it doesn't make a new one
     user_id = getUserID(login_session['email'])
     if not user_id:
+        username = login_session['username']
+        if username is None or len(username) == 0:
+            username = login_session['email'].split('@')[0]
+            login_session['username'] = username
         user_id = createUser(login_session)
 
     login_session['user_id'] = user_id
