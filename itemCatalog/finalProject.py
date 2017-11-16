@@ -323,6 +323,8 @@ def gconnect():
             username = login_session['email'].split('@')[0]
             login_session['username'] = username
         user_id = createUser(login_session)
+    else:
+        login_session['username'] = getUserInfo(user_id).name
 
     login_session['user_id'] = user_id
 
@@ -344,31 +346,26 @@ def gdisconnect():
     access_token = login_session.get('access_token')
     if access_token is None:
         print('Access Token is None')
-        response = make_response(json.dumps('Current user not connected.'),
-                                 401)
-        response.headers['Content-Type'] = 'application/json'
-        return response
-    print('Got access token for the user: {}'.
-          format(login_session['username']))
+        flash('Current user not connected.')
+        return redirect(url_for('showCategories'))
+    # print('Got access token for the user: {}'.
+    #       format(login_session['username']))
     url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' %\
         login_session['access_token']
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
-    print('Access token revoke result:{}'.format(result))
+    # print('Access token revoke result:{}'.format(result))
     if result['status'] == '200':
         del login_session['access_token']
         del login_session['gplus_id']
         del login_session['username']
         del login_session['email']
         del login_session['picture']
-        response = make_response(json.dumps('Successfully disconnected.'), 200)
-        response.headers['Content-Type'] = 'application/json'
-        return response
+        flash('Successfully logged out')
+        return redirect(url_for('showCategories'))
     else:
-        response = make_response(
-            json.dumps('Failed to revoke token for given user.', 400))
-        response.headers['Content-Type'] = 'application/json'
-        return response
+        flash('Failed to revoke token for given user.')
+        return redirect(url_for('showCategories'))
 
 
 def createUser(login_session):
