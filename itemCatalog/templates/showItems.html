@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {% include "header.html"%}
-		<header id="head-container">
+		<header id="title-container">
 			<p>{{category.name}}</p>
 		</header>
 		<div id="select-tab">
@@ -26,11 +26,13 @@
 
 				{% for item in items %}
 				<section class="item">
-					<h3 class="item_name">{{item.name}}</h3>
+					<h2 class="item_name">{{item.name}}</h2>
 					<p class="item_description">{{item.description}}</p>
 					{% if logged_in_user_id and logged_in_user_id == category.user_id %}
-					<a href="{{url_for('editItem', category_id = category.id, item_id = item.id)}}">Edit</a>
-					<a href="{{url_for('deleteItem', category_id = category.id, item_id = item.id)}}">Delete</a>
+					<div class="selection-panel">
+						<a href="{{url_for('editItem', category_id = category.id, item_id = item.id)}}">Edit</a>
+						<a href="{{url_for('deleteItem', category_id = category.id, item_id = item.id)}}">Delete</a>
+					</div>
 					{% endif %}
 				</section>
 				{% endfor %}

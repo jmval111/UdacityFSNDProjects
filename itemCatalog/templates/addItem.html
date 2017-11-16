@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% include "header.html"%}
 	<div id="form-container">
 		<h1>Add New Item for {{category.name}}</h1>
 		<form id="usrform" action="{{url_for('addItem', category_id = category.id)}}" method="POST">

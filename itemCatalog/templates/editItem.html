@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% include "header.html"%}
 	<div id="form-container">
 	<h1>Edit Item {{item.name}}</h1>
 		<form action="{{url_for('editItem', category_id = category.id, item_id = item.id)}}" method="POST">
@@ -7,7 +8,7 @@
 			<input id="name" type="text" name="name" value="{{item.name}}" required><br>
 
 			<label for="description">Description</label>
-			<input id="description" type="text" name="description" value="{{item.description}}"><br>
+			<textarea id="description" name="description">{{item.description}}</textarea><br>
 
 			<input type="submit" value="Update">
 			<a id="cancel" href="{{url_for('showItems', category_id=category.id)}}">Cancel</a>

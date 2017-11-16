@@ -1,9 +1,11 @@
-<header>
+<header id='header-container'>
 			<h1>Catalog App</h1>
-			<a href="{{url_for('showCategories')}}">Home</a>
-			{%if 'username' not in session %}
-			<a href="{{url_for('showLogin')}}">Login </a>
-			{% else %}
-			<a href="{{url_for('gdisconnect')}}">Logout </a>
-			{% endif %}
+			<div id='nav-container'>
+				<a href="{{url_for('showCategories')}}">Home</a>
+				{%if 'username' not in session %}
+				<a href="{{url_for('showLogin')}}">Login </a>
+				{% else %}
+				<a href="{{url_for('gdisconnect')}}">Logout </a>
+				{% endif %}
+			</div>
 </header>
