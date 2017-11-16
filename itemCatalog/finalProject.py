@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask import make_response
+from flask import make_response, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item, User
@@ -389,6 +389,37 @@ def getUserID(email):
         return user.id
     except Exception as e:
         return None
+
+
+@app.route('/categories/JSON')
+def getCategoriesJSON():
+    categories = session.query(Category).all()
+    return jsonify(Categories=[c.serialize for c in categories])
+
+
+@app.route('/category/<int:category_id>/JSON')
+def getCategoryJSON(category_id):
+    category = session.query(Category).filter_by(id=category_id).first()
+    if category:
+        return jsonify(Category=category.serialize)
+    else:
+        return jsonify(Category={})
+
+
+@app.route('/category/<int:category_id>/items/JSON')
+def getItemsJSON(category_id):
+    items = session.query(Item).filter_by(category_id=category_id).all()
+    return jsonify(Items=[i.serialize for i in items])
+
+
+@app.route('/category/<int:category_id>/item/<int:item_id>/JSON')
+def getItemJSON(category_id, item_id):
+    item = session.query(Item).filter_by(id=item_id,
+                                         category_id=category_id).first()
+    if item:
+        return jsonify(Item=item.serialize)
+    else:
+        return jsonify(Item={})
 
 
 if __name__ == '__main__':

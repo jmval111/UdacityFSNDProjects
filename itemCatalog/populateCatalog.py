@@ -15,8 +15,8 @@ session.commit()
 # Category: Cricket
 category1 = Category(user_id=1,
                      name="Cricket",
-                     description="Cricket is a bat-and-ball game played between \
-                     two teams of eleven players")
+                     description=("Cricket is a bat-and-ball game played "
+                                  "between two teams of eleven players"))
 
 session.add(category1)
 session.commit()
@@ -29,23 +29,24 @@ session.add(item1)
 session.commit()
 
 item2 = Item(user_id=1, name="gloves",
-             description="thickly padded above the fingers and on the thumb of \
-             the hand", category=category1)
+             description=("thickly padded above the fingers and on the thumb"
+                          " of the hand"), category=category1)
 
 session.add(item2)
 session.commit()
 
 item3 = Item(user_id=1,
-             name="bat", description="cane handle attached to a flat-fronted \
-             willow-wood blade", category=category1)
+             name="bat", description=("cane handle attached to a"
+                                      "flat - fronted willow - wood blade"),
+             category=category1)
 
 session.add(item3)
 session.commit()
 
 
 item4 = Item(user_id=1, name="Wicket-keeper's gloves",
-             description=" includes webbing between the thumb and index \
-             fingers", category=category1)
+             description=("includes webbing between the thumb and index"
+                          "fingers"), category=category1)
 
 session.add(item4)
 session.commit()
@@ -53,8 +54,8 @@ session.commit()
 
 # Category: Football
 category2 = Category(user_id=1, name="Soccer",
-                     description="kicking a ball with the foot to score \
-                     a goal")
+                     description=("kicking a ball with the foot to score "
+                                  "a goal"))
 
 session.add(category2)
 session.commit()
@@ -75,8 +76,9 @@ session.commit()
 
 # Category: Hockey
 category1 = Category(user_id=1,
-                     name="Hockey", description="maneuver a ball or a puck \
-                     into the opponent's goal using a hockey stick")
+                     name="Hockey", description=("maneuver a ball or a puck "
+                                                 "into the opponent's goal "
+                                                 "using a hockey stick"))
 
 session.add(category1)
 session.commit()
