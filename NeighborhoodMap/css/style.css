@@ -1,0 +1,154 @@
+html,body {
+ font-family: Arial, sans-serif;
+ height: 100%;
+ margin: 0;
+ padding: 0;
+}
+
+#container {
+  height: 100%;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  background-color: lightyellow;
+}
+
+.sidebar{
+  position: fixed;
+  top: 0px;
+  left: -250px;
+  background: black;
+  width: 250px;
+  height: 100%;
+  transition: left 600ms ease-in-out;
+  color: white;
+  z-index: 1;
+}
+
+.sidebar-active{
+  left: 0px;
+}
+
+
+.sidebarBtn{
+  position:absolute;
+  top: 0px;
+  right: -50px;
+  width: 50px;
+  height: 50px;
+  box-sizing: border-box;
+  cursor: pointer;
+  background: black;
+  border: none;
+  outline: none;
+}
+
+.sidebarBtn span{
+  display: block;
+  width: 35px;
+  height: 3px;
+  background: #f5f5f5;
+  position: absolute;
+  top: 24px;
+  transition: 600ms;
+}
+
+.sidebarBtn span:before{
+  content: '';
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #f5f5f5;
+  position: absolute;
+  top: -10px;
+  left: 0px;
+  transition: 600ms;
+}
+
+.sidebarBtn span:after{
+  content: '';
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #f5f5f5;
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  transition: 600ms;
+}
+
+.sidebarBtn.sidebarBtn-close span{
+  background: transparent;
+}
+
+.sidebarBtn.sidebarBtn-close span:before{
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.sidebarBtn.sidebarBtn-close span:after{
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+ul{
+  padding-left: 10px;
+  list-style: none;
+}
+
+li{
+  padding: 10px;
+  border-bottom: 2px solid;
+}
+
+ul>li:last-child{
+  border: none;
+}
+
+.arrow:after{
+  font-weight: bold;
+  content: '\203A';
+  transform: rotate(90deg);
+  float: right;
+  margin-right: 20px;
+}
+
+/*.display-filters .arrow:after{
+  content: '\203A';
+  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+}*/
+
+
+.sub-menu{
+  margin: 10px;
+  padding: 10px;
+  background-color: #413f4d;
+  display:none;
+}
+
+p{
+  margin: 0px;
+}
+/*.menu>li:hover .sub-menu.level-1{
+  display: block;
+}*/
+
+.display-filters{
+  display: block;
+}
+
+#locationList{
+  width: 100%;
+  background-color: inherit;
+  color:inherit;
+  padding: 10px;
+  font: inherit;
+}
+
+#locationList option{
+  padding: 10px;
+}

@@ -37,10 +37,12 @@ var appViewModel = function(){
     for(var i=0; i<self.markers.length;i++){
       self.markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
     }
-    var selectedMarker = $.grep(self.markers, function(m){ return m.id === self.selectedLocation().placeID; })
-    selectedMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
-    selectedMarker[0].setAnimation(google.maps.Animation.BOUNCE);
-    window.setTimeout(function(){selectedMarker[0].setAnimation(null);},1400);
+    if(self.selectedLocation()){
+      var selectedMarker = $.grep(self.markers, function(m){ return m.id === self.selectedLocation().placeID; })
+      selectedMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
+      selectedMarker[0].setAnimation(google.maps.Animation.BOUNCE);
+      window.setTimeout(function(){selectedMarker[0].setAnimation(null);},700);
+    }
   };
 
   self.filteredLocations.subscribe(function(){
@@ -69,6 +71,16 @@ function initMap() {
     zoom: 15
   });
 
+  function calculateCenter() {
+    center = map.getCenter();
+  }
+  google.maps.event.addDomListener(map, 'idle', function() {
+    calculateCenter();
+  });
+
+  google.maps.event.addDomListener(window, 'resize', function() {
+    map.setCenter(center);
+  });
   var infowindow = new google.maps.InfoWindow();
   var service = new google.maps.places.PlacesService(map);
 
@@ -106,7 +118,14 @@ function initMap() {
 
 }//ENDED initMap
 
+function toggleSidebar(){
+  $('.sidebar').toggleClass('sidebar-active');
+  $('.sidebarBtn').toggleClass('sidebarBtn-close');
+}
 
+function displayFilters(){
+  $('#filters-list').toggleClass("display-filters");
+}
 // Cinemax Malad
 // ChIJ2dwdG-625zsRpiwnKWf7L6I
 //
