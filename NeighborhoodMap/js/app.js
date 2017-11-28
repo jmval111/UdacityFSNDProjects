@@ -1,6 +1,7 @@
 var map;
 var types = new Set(["all"]);
 var viewModel;
+var infowindow;
 
 var locationDetails = function(place){
   this.placeID = place.place_id;
@@ -34,14 +35,17 @@ var appViewModel = function(){
 
   self.highlightMarkers = function(){
     //console.log("highlighting marker for "+Object.keys(self.selectedLocation()));
-    for(var i=0; i<self.markers.length;i++){
-      self.markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
-    }
+    // for(var i=0; i<self.markers.length;i++){
+    //   self.markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
+    // }
     if(self.selectedLocation()){
-      var selectedMarker = $.grep(self.markers, function(m){ return m.id === self.selectedLocation().placeID; })
-      selectedMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
-      selectedMarker[0].setAnimation(google.maps.Animation.BOUNCE);
-      window.setTimeout(function(){selectedMarker[0].setAnimation(null);},700);
+      //var selectedMarker = $.grep(self.markers, function(m){ return m.id === self.selectedLocation().placeID; })
+      // selectedMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
+      // selectedMarker[0].setAnimation(google.maps.Animation.BOUNCE);
+      // window.setTimeout(function(){selectedMarker[0].setAnimation(null);},700);
+      if(self.selectedLocation()){
+        markerSelected(self.selectedLocation());
+      }
     }
   };
 
@@ -75,13 +79,15 @@ function initMap() {
     center = map.getCenter();
   }
   google.maps.event.addDomListener(map, 'idle', function() {
+	console.log('Map Idle');
     calculateCenter();
   });
 
   google.maps.event.addDomListener(window, 'resize', function() {
-    map.setCenter(center);
+    console.log('Window resized');
+	map.setCenter(center);
   });
-  var infowindow = new google.maps.InfoWindow();
+  infowindow = new google.maps.InfoWindow();
   var service = new google.maps.places.PlacesService(map);
 
   //populate places and markers
@@ -100,10 +106,11 @@ function initMap() {
             var locationItem = new locationDetails(place);
             //locationList.push(locationItem);
             google.maps.event.addListener(marker, 'click', function() {
-              infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-                'Place ID: ' + place.place_id + '<br>' +
-                place.formatted_address + '</div>');
-              infowindow.open(map, this);
+              // infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+              //   'Place ID: ' + place.place_id + '<br>' +
+              //   place.formatted_address + '</div>');
+              // infowindow.open(map, this);
+              markerSelected(locationItem);
             });
             viewModel.markers.push(marker);
             //places.push(place);
@@ -125,6 +132,25 @@ function toggleSidebar(){
 
 function displayFilters(){
   $('#filters-list').toggleClass("display-filters");
+}
+
+function markerSelected(selectedLocn){
+  for(var i=0; i<viewModel.markers.length;i++){
+    viewModel.markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
+  }
+  var markersArr = $.grep(viewModel.markers, function(m){ return m.id === selectedLocn.placeID; })
+  if(markersArr.length>0){
+    var marker = markersArr[0];
+    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    window.setTimeout(function(){marker.setAnimation(null);},700);
+    infowindow.setContent('<div><strong>' + selectedLocn.name + '</strong><br>' +
+      'Place ID: ' + selectedLocn.place_id + '<br>' +
+      selectedLocn.formatted_address + '</div>');
+    infowindow.open(map, marker);
+    viewModel.selectedLocation(selectedLocn);
+  }
+
 }
 // Cinemax Malad
 // ChIJ2dwdG-625zsRpiwnKWf7L6I
