@@ -2,6 +2,12 @@ var map;
 var types = new Set(["all"]);
 var viewModel;
 var infowindow;
+var loc_types_food = [
+  "restaurant",
+  "cafe",
+  "meal_takeaway",
+  "meal_delivery"
+];
 
 var locationDetails = function(place){
   this.placeID = place.place_id;
@@ -15,7 +21,8 @@ var placeIDs = ['ChIJ2dwdG-625zsRpiwnKWf7L6I',
   'ChIJA3oJu-625zsRTn5gf9za28Q',
   'ChIJm8mGy-e25zsRQr3AGJAC3Gg',
   'ChIJy0WY1ui25zsRZp42Q5Y5N5g',
-  'ChIJSz7D5Ou25zsRBRtLmjZ3W_U'
+  'ChIJSz7D5Ou25zsRBRtLmjZ3W_U',
+  'ChIJmeSKZAG35zsRJHALp7D2q0c'
 ];
 
 var appViewModel = function(){
@@ -28,21 +35,12 @@ var appViewModel = function(){
   self.selectedType = ko.observable("all");
   self.filteredLocations = ko.computed(function(){
     return self.availableLocations().filter(function(location){
-      //console.log(this.selectedType());
       return (self.selectedType() === "all" || location.type === self.selectedType());
     });
   });
 
   self.highlightMarkers = function(){
-    //console.log("highlighting marker for "+Object.keys(self.selectedLocation()));
-    // for(var i=0; i<self.markers.length;i++){
-    //   self.markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
-    // }
     if(self.selectedLocation()){
-      //var selectedMarker = $.grep(self.markers, function(m){ return m.id === self.selectedLocation().placeID; })
-      // selectedMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
-      // selectedMarker[0].setAnimation(google.maps.Animation.BOUNCE);
-      // window.setTimeout(function(){selectedMarker[0].setAnimation(null);},700);
       if(self.selectedLocation()){
         markerSelected(self.selectedLocation());
       }
@@ -79,12 +77,10 @@ function initMap() {
     center = map.getCenter();
   }
   google.maps.event.addDomListener(map, 'idle', function() {
-	console.log('Map Idle');
     calculateCenter();
   });
 
   google.maps.event.addDomListener(window, 'resize', function() {
-    console.log('Window resized');
 	map.setCenter(center);
   });
   infowindow = new google.maps.InfoWindow();
@@ -106,10 +102,6 @@ function initMap() {
             var locationItem = new locationDetails(place);
             //locationList.push(locationItem);
             google.maps.event.addListener(marker, 'click', function() {
-              // infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-              //   'Place ID: ' + place.place_id + '<br>' +
-              //   place.formatted_address + '</div>');
-              // infowindow.open(map, this);
               markerSelected(locationItem);
             });
             viewModel.markers.push(marker);
@@ -117,7 +109,6 @@ function initMap() {
             viewModel.places.push(place);
             types.add(place.types[0]);
             viewModel.typeFilterOptions(Array.from(types));
-            //viewModel.availableLocations(locationList);
             viewModel.availableLocations.push(locationItem);
           }
         });
@@ -144,46 +135,16 @@ function markerSelected(selectedLocn){
     marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
     marker.setAnimation(google.maps.Animation.BOUNCE);
     window.setTimeout(function(){marker.setAnimation(null);},700);
-    infowindow.setContent('<div><strong>' + selectedLocn.name + '</strong><br>' +
-      'Place ID: ' + selectedLocn.place_id + '<br>' +
-      selectedLocn.formatted_address + '</div>');
+
     infowindow.open(map, marker);
     viewModel.selectedLocation(selectedLocn);
-  }
+    if(loc_types_food.indexOf(selectedLocn.type)>-1){
+      getZomatoDetails(selectedLocn.name, marker.position.lat(), marker.position.lng(), infowindow);
 
+  }else{
+    infowindow.setContent('<div><strong>' + selectedLocn.name + '</strong><br>' +
+      'Place ID: ' + selectedLocn.placeID + '<br>' +
+      selectedLocn.formatted_address + '</div>');
+  }
+ }
 }
-// Cinemax Malad
-// ChIJ2dwdG-625zsRpiwnKWf7L6I
-//
-// Movie Time Cinemax
-// ChIJA3oJu-625zsRTn5gf9za28Q
-//
-// Orchids The International school
-// ChIJm8mGy-e25zsRQr3AGJAC3Gg
-//
-// Silver Oaks
-// ChIJy0WY1ui25zsRZp42Q5Y5N5g
-//
-// Ryan International school
-// ChIJ0SmyQFTP5zsRjIdkzrwnMXE
-//
-// Axis bank
-// ChIJQSK0tuK25zsRcyOalRc9YI8
-//
-// Landmark Veg restaurant
-// ChIJV3Odaem25zsRlc1R4TvdfRo
-//
-// Cinemax
-// ChIJ2dwdG-625zsRpiwnKWf7L6I
-//
-// KG Mittal Institute of Management
-// ChIJQzph2O-25zsRDEC4mibd6XE
-//
-// DMart Malad
-// ChIJnUd5au625zsR4G6PeNn1YBw
-//
-// Joey's Pizza
-// ChIJQVuEsfa25zsRhrWdU-l8WeE
-//
-// PVR Milap Cinemas
-// ChIJRYoTluC25zsRyfRBwb62I0M
