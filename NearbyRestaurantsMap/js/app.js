@@ -1,5 +1,6 @@
 var map;
-var allCuisines = new Set(["all"]);
+//set won't keep duplicates :)
+var allCuisines = new Set([]);
 var restoViewModel;
 // This global circle variable is to ensure only ONE circle is rendered.
 var circle = null;
@@ -32,7 +33,7 @@ var RestaurantViewModel = function(){
   self.markers = new Array();
   self.availableRestaurants = ko.observableArray([]);
   self.selectedRestaurant = ko.observable();
-  self.availableCuisuines = ko.observableArray();
+  self.availableCuisines = ko.observableArray();
   self.selectedCuisine = ko.observable("all");
   self.availableMinCost = ko.observable();
   self.availableMaxCost = ko.observable();
@@ -40,7 +41,7 @@ var RestaurantViewModel = function(){
   self.selectedMaxCost = ko.observable();
   self.filteredRestaurants = ko.computed(function(){
     return self.availableRestaurants().filter(function(restaurant){
-      return ( (self.selectedCuisine() === "all") || (self.availableCuisuinesself().indexOf(self.selectedCuisine())>-1) );
+      return ( (self.selectedCuisine() === "all") || (restaurant.cuisines.indexOf(self.selectedCuisine())>-1) );
     });
   });
 
@@ -93,7 +94,7 @@ function initMap() {
   $('#toggle-drawing').on('click',function() {
           toggleDrawing(drawingManager);
         });
-        
+
   $('#searchZomatoBtn').on('click',searchWithinCircle);
 
   drawingManager.addListener('overlaycomplete', function(event) {
@@ -240,13 +241,15 @@ function displayRestaurants(data){
       }.bind(currRestaurant));
       restoViewModel.markers.push(marker);
       for(var c=0;c<currRestaurant.cuisines.length;c++){
-          allCuisines.add(currRestaurant.cuisines);
+          allCuisines.add(currRestaurant.cuisines[c]);
       }
-      restoViewModel.availableCuisuines(Array.from(allCuisines));
       restoViewModel.availableRestaurants.push(currRestaurant);
 
     }//populated places and markers
-
+    var sortedCuisines = Array.from(allCuisines).sort();
+    //first selected option should be "all"
+    sortedCuisines.unshift("all");
+    restoViewModel.availableCuisines(sortedCuisines);
   }
   else{
     console.log('Error:'+data.errorMsg);

@@ -36,9 +36,8 @@
             <ul id="filters-list" class="sub-menu">
               <li>
                 <p>Cuisuine</p>
-                    <select>
-                      <option>Italian</option>
-                      <option>Chinese</option>
+                    <select data-bind="options: availableCuisines,
+                                        value: selectedCuisine">
                     </select>
               </li>
               <li>
