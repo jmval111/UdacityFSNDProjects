@@ -117,6 +117,24 @@ html,body {
   left: 0px;
 }
 
+div#list-container {
+    margin-right: 10px;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+#filteredList>li {
+    border-bottom: 1px solid;
+}
+#filteredList>li:last-child {
+    border-bottom: none;
+}
+
+#filteredList>li:hover {
+    background-color: beige;
+    color: black;
+    cursor: pointer;
+}
 
 .sidebarBtn{
   color: white;
@@ -129,8 +147,8 @@ html,body {
     border: none;
     outline: none;
     transform: translate3d(0, 0, 0)  rotate(90deg) ;
-  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-  animation-delay: 2s;
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    animation-delay: 2s;
 }
 
 .sidebarBtn span{
@@ -205,6 +223,7 @@ ul>li:last-child{
 
 #filters-list li:hover{
   background-color: black;
+  cursor: auto;
 }
 .sub-menu{
   margin: 10px;

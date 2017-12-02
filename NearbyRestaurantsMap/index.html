@@ -53,15 +53,17 @@
               </li>
             </ul>
           </li>
-          <li>
-            <select id="locationList">
-            </select>
-          </li>
         </ul>
-        <button class="sidebarBtn" onclick="toggleSidebar()">
-          <h3>FILTER</h3>
-        </button>
-       </div>
+      <div id="list-container">
+        <ul id="filteredList" data-bind="foreach: filteredRestaurants">
+          <li data-bind="text:name, click:markerSelected"></li>
+        </ul>
+      </div>
+      <button class="sidebarBtn" onclick="toggleSidebar()">
+        <h3>FILTER</h3>
+      </button>
+
+      </div>
 
        <div id="map"></div>
       </div>
