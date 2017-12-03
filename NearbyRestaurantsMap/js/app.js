@@ -7,6 +7,7 @@ var restoViewModel;
 var circle = null;
 var infowindow;
 
+//preprocess restaurant data from json
 var Restaurant = function(restaurant_data){
   this.id = restaurant_data.id;
   this.name = restaurant_data.name;
@@ -32,10 +33,12 @@ var Restaurant = function(restaurant_data){
 var RestaurantViewModel = function(){
   self = this;
   self.markers = new Array();
+  self.isSearchMode = ko.observable(true);
   self.availableRestaurants = ko.observableArray([]);
   self.selectedRestaurant = ko.observable();
   self.availableCuisines = ko.observableArray();
   self.selectedCuisine = ko.observable("all");
+  //for later use in cost filter
   self.availableMinCost = ko.observable();
   self.availableMaxCost = ko.observable();
   self.selectedMinCost = ko.observable();
@@ -54,6 +57,7 @@ var RestaurantViewModel = function(){
     }
   };
 
+  //filter markers
   self.filteredRestaurants.subscribe(function(){
       for(var i=0; i<self.markers.length;i++){
         var currMarker = self.markers[i];
@@ -67,8 +71,9 @@ var RestaurantViewModel = function(){
       }
     });
 
-  //miscelleneous controls
+  //restaurants list independent controls
   self.zoom_in_text = ko.observable();
+
   // This function takes the input value in the find nearby area text input
   // locates it, and then zooms into that area. This is so that the user can
   // show all listings, then decide to focus on one area of the map.
@@ -80,6 +85,7 @@ var RestaurantViewModel = function(){
     console.log('Zoom Text:'+address);
     // Make sure the address isn't blank.
     if (address == '') {
+      //TODO put this is closable alert div
       window.alert('You must enter an area, or address.');
     } else {
       // Geocode the address/area entered to get the center. Then, center the map
@@ -92,6 +98,7 @@ var RestaurantViewModel = function(){
             map.setCenter(results[0].geometry.location);
             map.setZoom(15);
           } else {
+            //TODO put this in closable alert div
             window.alert('We could not find that location - try entering a more' +
                 ' specific place.');
           }
@@ -117,38 +124,53 @@ var RestaurantViewModel = function(){
   // and shows only the ones within it. This is so that the
   // user can specify an exact area of search.
   self.searchWithinCircle=function() {
-     //console.log('Circle changed:'+circle.getCenter().lat());
-     //TODO: hide Filter sidebar
-     //TODO: clear all markers if any
-     clearMarkers();
-     //TODO: clear restoViewModel data
-     clearViewModel();
+    //hides search button to prevent overlapping searches
+     self.isSearchMode(false);
 
      if(circle!=null){
        fetchRestaurantsInCircle(circle.getCenter().lat(),circle.getCenter().lng(),circle.getRadius(),displayRestaurants);
      }
      else{
+       //TODO put msg in closable alert div
        console.log('please draw circle first');
+       //don't hide search button on error
+       self.isSearchMode(true);
      }
   };
 
+  self.clearSearch = function(){
+    clearMarkers();
+    clearViewModel();
+    //remove circle if any
+    if(circle!=null){
+      circle.setMap(null);
+      circle = null;
+    }
+  };
+
+  //to control filters control panel
   self.showFilters = ko.observable(false);
   self.toggleShowFilters = function(){
     self.showFilters(!self.showFilters());
   };
+
+  //to control top right corner panel
   self.showOptions = ko.observable(false);
   self.toggleShowOptions = function(){
     self.showOptions(!self.showOptions());
   };
+
+  //to control left sidebar panel
   self.showSidebar = ko.observable(false);
   self.toggleSidebar = function(){
     self.showSidebar(!self.showSidebar());
-  };
+  }
 }
 
 restoViewModel = new RestaurantViewModel();
 ko.applyBindings(restoViewModel);
-// Create a new blank array for all the listing markers.
+
+//google calls initMap when map is loaded
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     //TODO create a CONSTANT for lat lng
@@ -217,14 +239,27 @@ function clearMarkers(){
 
 function clearViewModel(){
   console.log('clearViewModel');
+  restoViewModel.showFilters(false);
+  restoViewModel.isSearchMode(true);
+  restoViewModel.markers.length = 0;
+  restoViewModel.availableRestaurants.removeAll();
+  restoViewModel.availableCuisines.removeAll();
+  allCuisines.clear();
+
+  // restoViewModel.showSidebar = restoViewModel.showSidebar(false);
 }
+
+//remove this debug var
 var cbData;
+
+//callback function when ajax request returns data
 function displayRestaurants(data){
+  //TODO for debug, remove later
   cbData=data;
   if(data.results_found>0){
     console.log("Restaurants found:"+data.results_found);
+    //TODO filter out of circle places
     //populate places and markers
-
     for(var i=0; i<data.results_shown; i++){
       console.log("populating viewModel and markers");
       var currRestaurant = new Restaurant(data.restaurants[i].restaurant);
@@ -236,22 +271,30 @@ function displayRestaurants(data){
       });
       marker.id = currRestaurant.id;
       //locationList.push(locationItem);
+
       google.maps.event.addListener(marker, 'click', function() {
         return markerSelected(this);
       }.bind(currRestaurant));
+
       restoViewModel.markers.push(marker);
+
+      //add restaurants cuisines to the set
       for(var c=0;c<currRestaurant.cuisines.length;c++){
           allCuisines.add(currRestaurant.cuisines[c]);
       }
+
       restoViewModel.availableRestaurants.push(currRestaurant);
 
     }//populated places and markers
+
     var sortedCuisines = Array.from(allCuisines).sort();
-    //first selected option should be "all"
+    //first cuisine option should be "all"
     sortedCuisines.unshift("all");
     restoViewModel.availableCuisines(sortedCuisines);
   }
   else{
     console.log('Error:'+data.errorMsg);
+    clearMarkers();
+    clearViewModel();
   }
 }

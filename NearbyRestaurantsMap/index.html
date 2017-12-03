@@ -14,20 +14,26 @@
           <div class="arrow bounce" data-bind="click: toggleShowOptions"></div>
         </div>
         <div class="options-box" data-bind="css:{'options-visible':showOptions}">
-         <div>
-            <input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!" data-bind="value:zoom_in_text">
-            <input id="zoom-to-area" type="button" value="Zoom" data-bind="click:zoomToArea">
+          <div class="options" data-bind="visible: isSearchMode">
+           <div>
+              <input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!" data-bind="value:zoom_in_text">
+              <input id="zoom-to-area" type="button" value="Zoom" data-bind="click:zoomToArea">
+            </div>
+            <hr>
+            <div>
+              <span class="text"> Draw a circle to search within it for Restaurants!</span>
+              <input id="toggle-drawing"  type="button" value="Drawing Tools" data-bind="click:toggleDrawing">
+            </div>
+            <hr>
+            <div>
+              <input id="searchZomatoBtn" type="button" value="Search Restaurants" data-bind="click:searchWithinCircle">
+            </div>
           </div>
-          <hr>
-          <div>
-            <span class="text"> Draw a circle to search within it for Restaurants!</span>
-            <input id="toggle-drawing"  type="button" value="Drawing Tools" data-bind="click:toggleDrawing">
-          </div>
-          <hr>
-          <div>
-            <input id="searchZomatoBtn" type="button" value="Search Restaurants" data-bind="click:searchWithinCircle">
+          <div  data-bind="visible: !isSearchMode(), click: function(){isSearchMode(true); clearSearch()}">
+            <input id="newSearchBtn" type="button" value="New Search">
           </div>
        </div>
+       
        <!-- sidebar div -->
        <div class="sidebar" data-bind="visible: availableRestaurants().length>0, css:{'sidebar-active':showSidebar}">
         <ul class="menu">
