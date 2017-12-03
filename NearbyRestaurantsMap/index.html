@@ -11,29 +11,29 @@
       <div class="container">
         <div id="fixed-header">
           <h1>Where's My Food</h1>
-          <div class="arrow bounce"></div>
+          <div class="arrow bounce" data-bind="click: toggleShowOptions"></div>
         </div>
-        <div class="options-box">
+        <div class="options-box" data-bind="css:{'options-visible':showOptions}">
          <div>
-            <input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!">
-            <input id="zoom-to-area" type="button" value="Zoom" onclick="zoomToArea()">
+            <input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!" data-bind="value:zoom_in_text">
+            <input id="zoom-to-area" type="button" value="Zoom" data-bind="click:zoomToArea">
           </div>
           <hr>
           <div>
             <span class="text"> Draw a circle to search within it for Restaurants!</span>
-            <input id="toggle-drawing"  type="button" value="Drawing Tools">
+            <input id="toggle-drawing"  type="button" value="Drawing Tools" data-bind="click:toggleDrawing">
           </div>
           <hr>
           <div>
-            <input id="searchZomatoBtn" type="button" value="Search Restaurants">
+            <input id="searchZomatoBtn" type="button" value="Search Restaurants" data-bind="click:searchWithinCircle">
           </div>
        </div>
        <!-- sidebar div -->
-       <div class="sidebar">
+       <div class="sidebar" data-bind="visible: availableRestaurants().length>0, css:{'sidebar-active':showSidebar}">
         <ul class="menu">
           <li style="cursor: pointer;">
-            <p onclick="displayFilters()">Filter<span class="arrow-small"></span></p>
-            <ul id="filters-list" class="sub-menu">
+            <p class="filter-header" data-bind="click: toggleShowFilters">Filter<span class="arrow-small"></span></p>
+            <ul id="filters-list" class="sub-menu" data-bind="css:{'filters-visible': showFilters}">
               <li>
                 <p>Cuisuine</p>
                     <select data-bind="options: availableCuisines,
@@ -59,7 +59,7 @@
           <li data-bind="text:name, click:markerSelected"></li>
         </ul>
       </div>
-      <button class="sidebarBtn" onclick="toggleSidebar()">
+      <button class="sidebarBtn" data-bind="click:toggleSidebar">
         <h3>FILTER</h3>
       </button>
 

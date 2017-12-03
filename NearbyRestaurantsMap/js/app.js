@@ -1,6 +1,7 @@
 var map;
 //set won't keep duplicates :)
 var allCuisines = new Set([]);
+var drawingManager;
 var restoViewModel;
 // This global circle variable is to ensure only ONE circle is rendered.
 var circle = null;
@@ -66,6 +67,83 @@ var RestaurantViewModel = function(){
       }
     });
 
+  //miscelleneous controls
+  self.zoom_in_text = ko.observable();
+  // This function takes the input value in the find nearby area text input
+  // locates it, and then zooms into that area. This is so that the user can
+  // show all listings, then decide to focus on one area of the map.
+  self.zoomToArea = function() {
+    // Initialize the geocoder.
+    var geocoder = new google.maps.Geocoder();
+    // Get the address or place that the user entered.
+    var address = self.zoom_in_text();
+    console.log('Zoom Text:'+address);
+    // Make sure the address isn't blank.
+    if (address == '') {
+      window.alert('You must enter an area, or address.');
+    } else {
+      // Geocode the address/area entered to get the center. Then, center the map
+      // on it and zoom in
+      geocoder.geocode(
+        { address: address,
+          componentRestrictions: {country:'IN', locality: 'Mumbai'}
+        }, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            map.setZoom(15);
+          } else {
+            window.alert('We could not find that location - try entering a more' +
+                ' specific place.');
+          }
+        });
+    }
+  };
+
+  // This shows and hides (respectively) the drawing options.
+  self.toggleDrawing = function() {
+    console.log('toggleDrawing');
+    if (drawingManager.map) {
+      drawingManager.setMap(null);
+      // In case the user drew anything, get rid of the circle
+      if (circle !== null) {
+        circle.setMap(null);
+      }
+    } else {
+      drawingManager.setMap(map);
+    }
+  };
+
+  // This function hides all markers outside the circle,
+  // and shows only the ones within it. This is so that the
+  // user can specify an exact area of search.
+  self.searchWithinCircle=function() {
+     //console.log('Circle changed:'+circle.getCenter().lat());
+     //TODO: hide Filter sidebar
+     //TODO: clear all markers if any
+     clearMarkers();
+     //TODO: clear restoViewModel data
+     clearViewModel();
+
+     if(circle!=null){
+       fetchRestaurantsInCircle(circle.getCenter().lat(),circle.getCenter().lng(),circle.getRadius(),displayRestaurants);
+     }
+     else{
+       console.log('please draw circle first');
+     }
+  };
+
+  self.showFilters = ko.observable(false);
+  self.toggleShowFilters = function(){
+    self.showFilters(!self.showFilters());
+  };
+  self.showOptions = ko.observable(false);
+  self.toggleShowOptions = function(){
+    self.showOptions(!self.showOptions());
+  };
+  self.showSidebar = ko.observable(false);
+  self.toggleSidebar = function(){
+    self.showSidebar(!self.showSidebar());
+  };
 }
 
 restoViewModel = new RestaurantViewModel();
@@ -80,7 +158,7 @@ function initMap() {
 
   infowindow = new google.maps.InfoWindow();
   // Initialize the drawing manager.
-  var drawingManager = new google.maps.drawing.DrawingManager({
+  drawingManager = new google.maps.drawing.DrawingManager({
     drawingMode: google.maps.drawing.OverlayType.CIRCLE,
     drawingControl: true,
     drawingControlOptions: {
@@ -91,11 +169,7 @@ function initMap() {
     }
   });
 
-  $('#toggle-drawing').on('click',function() {
-          toggleDrawing(drawingManager);
-        });
 
-  $('#searchZomatoBtn').on('click',searchWithinCircle);
 
   drawingManager.addListener('overlaycomplete', function(event) {
   // First, check if there is an existing circle.
@@ -112,19 +186,7 @@ function initMap() {
 
 }//ENDED initMap
 
-function toggleSidebar(){
-  $('.sidebar').toggleClass('sidebar-active');
-  $('.sidebarBtn').toggleClass('sidebarBtn-close');
-}
-
-$('#fixed-header').on('click',function(){
-  $('.options-box').toggleClass("toggle-visible");
-});
-
-function displayFilters(){
-  $('#filters-list').toggleClass("display-filters");
-}
-
+//Animate selected marker and show details of restaurant
 function markerSelected(selectedLocn){
   for(var i=0; i<restoViewModel.markers.length;i++){
     restoViewModel.markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
@@ -144,68 +206,6 @@ function markerSelected(selectedLocn){
  }
 }
 
-// This function takes the input value in the find nearby area text input
-// locates it, and then zooms into that area. This is so that the user can
-// show all listings, then decide to focus on one area of the map.
-function zoomToArea() {
-  // Initialize the geocoder.
-  var geocoder = new google.maps.Geocoder();
-  // Get the address or place that the user entered.
-  var address = $('#zoom-to-area-text').val();
-  console.log('Zoom Text:'+address);
-  // Make sure the address isn't blank.
-  if (address == '') {
-    window.alert('You must enter an area, or address.');
-  } else {
-    // Geocode the address/area entered to get the center. Then, center the map
-    // on it and zoom in
-    geocoder.geocode(
-      { address: address,
-        componentRestrictions: {country:'IN', locality: 'Mumbai'}
-      }, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          map.setCenter(results[0].geometry.location);
-          map.setZoom(15);
-        } else {
-          window.alert('We could not find that location - try entering a more' +
-              ' specific place.');
-        }
-      });
-  }
-}
-
-// This shows and hides (respectively) the drawing options.
-function toggleDrawing(drawingManager) {
-  console.log('toggleDrawing');
-  if (drawingManager.map) {
-    drawingManager.setMap(null);
-    // In case the user drew anything, get rid of the circle
-    if (circle !== null) {
-      circle.setMap(null);
-    }
-  } else {
-    drawingManager.setMap(map);
-  }
-}
-
-// This function hides all markers outside the circle,
-// and shows only the ones within it. This is so that the
-// user can specify an exact area of search.
-function searchWithinCircle() {
-   //console.log('Circle changed:'+circle.getCenter().lat());
-   //TODO: hide Filter sidebar
-   //TODO: clear all markers if any
-   clearMarkers();
-   //TODO: clear restoViewModel data
-   clearViewModel();
-
-   if(circle!=null){
-     fetchRestaurantsInCircle(circle.getCenter().lat(),circle.getCenter().lng(),circle.getRadius(),displayRestaurants);
-   }
-   else{
-     console.log('please draw circle first');
-   }
-}
 
 function clearMarkers(){
   var total_markers = restoViewModel.availableRestaurants().length;
