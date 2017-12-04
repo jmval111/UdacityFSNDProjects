@@ -34,6 +34,17 @@ var RestaurantViewModel = function(){
   self = this;
   self.markers = new Array();
   self.isSearchMode = ko.observable(true);
+
+  //predefined alert types and colors
+  self.alertType = {
+    DEFAULT: {ID:0, BG_COLOR: '#000000', COLOR:'#ffffff'},
+	  INFO: {ID:1, BG_COLOR:'#2196F3', COLOR:'#ffffff'},
+    INPROGRESS: {ID:2, BG_COLOR: '#000000', COLOR:'#ffffff'},
+	  SUCCESS: {ID:3, BG_COLOR:'#4CAF50', COLOR:'#ffffff'},
+    ERROR: {ID:4, BG_COLOR: '#f44336', COLOR:'#ffffff'}
+  };
+
+  self.alertMessage = ko.observable('');
   self.availableRestaurants = ko.observableArray([]);
   self.selectedRestaurant = ko.observable();
   self.availableCuisines = ko.observableArray();
@@ -84,9 +95,10 @@ var RestaurantViewModel = function(){
     var address = self.zoom_in_text();
     console.log('Zoom Text:'+address);
     // Make sure the address isn't blank.
-    if (address == '') {
+    if (!address || address == '') {
       //TODO put this is closable alert div
-      window.alert('You must enter an area, or address.');
+      console.log('You must enter an area, or address.');
+      setAlertMessage('You must enter an area, or address.', 'INFO');
     } else {
       // Geocode the address/area entered to get the center. Then, center the map
       // on it and zoom in
@@ -128,11 +140,11 @@ var RestaurantViewModel = function(){
      self.isSearchMode(false);
 
      if(circle!=null){
-       fetchRestaurantsInCircle(circle.getCenter().lat(),circle.getCenter().lng(),circle.getRadius(),displayRestaurants);
+       fetchRestaurantsInCircle(circle.getCenter().lat(),circle.getCenter().lng(),circle.getRadius(),displayRestaurants, ajaxErrorHandler);
      }
      else{
-       //TODO put msg in closable alert div
        console.log('please draw circle first');
+       setAlertMessage('Please draw a circle first', 'INFO');
        //don't hide search button on error
        self.isSearchMode(true);
      }
@@ -245,8 +257,6 @@ function clearViewModel(){
   restoViewModel.availableRestaurants.removeAll();
   restoViewModel.availableCuisines.removeAll();
   allCuisines.clear();
-
-  // restoViewModel.showSidebar = restoViewModel.showSidebar(false);
 }
 
 //remove this debug var
@@ -258,6 +268,8 @@ function displayRestaurants(data){
   cbData=data;
   if(data.results_found>0){
     console.log("Restaurants found:"+data.results_found);
+    setAlertMessage('Found restaurants!','SUCCESS');
+    window.setTimeout(function(){restoViewModel.alertMessage('');},2000);
     //TODO filter out of circle places
     //populate places and markers
     for(var i=0; i<data.results_shown; i++){
@@ -293,8 +305,66 @@ function displayRestaurants(data){
     restoViewModel.availableCuisines(sortedCuisines);
   }
   else{
-    console.log('Error:'+data.errorMsg);
-    clearMarkers();
-    clearViewModel();
+    setAlertMessage('Sorry, No restaurants found in given area.', 'INFO');
+    restoViewModel.clearSearch();
   }
+}
+
+function setAlertMessage(msg, msgType){
+  var newAlert = {
+    message: msg,
+    type: (restoViewModel.alertType[msgType]?Object.assign({}, restoViewModel.alertType[msgType]):
+          Object.assign({}, restoViewModel.alertType.DEFAULT))
+    };
+  restoViewModel.alertMessage(newAlert);
+}
+
+function ajaxErrorHandler(xhr, error){
+  console.log('ajaxErrorHandler status='+xhr.status+", readyState="+xhr.readyState)
+
+  if(xhr.readyState == 0 && (typeof xhr.status === 'undefined')){
+    setAlertMessage('searching restaurants...','INPROGRESS');
+  }
+  else if(xhr.readyState == 4 && xhr.status == 200){
+    //let done() callback handle success alerts
+    console.log("Ajax request successful");
+  }
+  else{
+      //error
+      var errorMsg;
+      if (!xhr.status) {
+        errorMsg = "No response recieved (check internet connection) OR developers.zomato.com could be blocked on your system or by ISP";
+      }
+      else if (xhr.status == 400) {
+        errorMsg = "Error: Bad request. Invalid input parameters";
+      }
+      else if (xhr.status == 401) {
+        errorMsg = "Error: Unauthorized. API Token ";
+      }
+      else if (xhr.status == 403) {
+        errorMsg = "Invalid Key or Parameters";
+      }
+      else if (xhr.status == 404) {
+        errorMsg = "Error 404: Service URL Not found";
+      }
+      else if (xhr.status == 410) {
+        errorMsg = "Error: URL expired";
+      }
+      else if (xhr.status == 500) {
+        errorMsg = "Error: Internal server error";
+      }
+      else if (xhr.status == 503) {
+        errorMsg = "Error: Service unavailable";
+      }
+      else if (xhr.status == 599) {
+        errorMsg = "Error: Connection timed out";
+      }
+      else if (xhr.status == 200){
+        errorMsg = error;
+      }else{
+        errorMsg = xhr.staus;
+      }
+      setAlertMessage(errorMsg,'ERROR');
+      restoViewModel.clearSearch();
+  }//error
 }

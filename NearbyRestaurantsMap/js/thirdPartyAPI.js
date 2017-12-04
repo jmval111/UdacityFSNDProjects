@@ -4,7 +4,8 @@ DEFAULT_QUERY_PARAM = {count: 20, sort: "real_distance", order: "asc"};//, sort:
 var xhrCap;
 var errorCap;
 var tpData;
-function fetchRestaurantsInCircle(lat, lng, radius, callbackFn){
+function fetchRestaurantsInCircle(lat, lng, radius, callbackFn, statusChangeHandlerFn){
+
   console.log("lat:"+lat+", lng:"+lng+", radius:"+radius)
   //create copy of DEFAULT_QUERY_PARAM
   var queryParam = Object.assign({},DEFAULT_QUERY_PARAM);
@@ -19,40 +20,29 @@ function fetchRestaurantsInCircle(lat, lng, radius, callbackFn){
     beforeSend: displayLoading,
 }).done(wrapData).fail(handleAjaxError);
 
-  function displayLoading(){
-    console.log('loading data...');
+  function displayLoading(xhr,setting){
+    console.log('loading data...'+xhr.status);
+    console.log(xhr);
+    statusChangeHandlerFn(xhr, null);
+    //setAlertMessage('Loading restaurants..','PROGRESS');
   }
 
-  function wrapData(data){
+  function wrapData(data, textStatus, xhr){
+    //TODO for debug, remove later
     tpData = data;
+    xhrCap = xhr;
     console.log('wrapData');
     data.isError = false;
     callbackFn(data);
+    statusChangeHandlerFn(xhr, null);
   }
 
-  function handleAjaxError(xhr, status, error) {
-    // var err = eval("(" + xhr.responseText + ")");
-    // console.log('status:'+status);
-    // console.log('err:'+err);
-    // console.log('xhr.responseText:'+xhr.responseText);
-    // infowindow.setContent("Error!");
-    console.log('handleAjaxError');
-    var errorMsg;
-    if(xhr.readyState === 0){
-      errorMsg = "Network Error";
-    }
-    else if(xhr.status && xhr.status === 403){
-      errorMsg = "Invalid API KEY";
-    }
-    else{
-      errorMsg = "Error";
-    }
+  function handleAjaxError(xhr, textStatus, error) {
+    statusChangeHandlerFn(xhr, error);
 
-    var data = {isError: true, errorMsg: errorMsg};
-    callbackFn(data);
-    // infowindow.setContent('<div class="error">'+errorMsg+'</div>');
-    // xhrCap = xhr;
-    // errorCap = error;
+    //TODO for debug, remove later
+    xhrCap = xhr;
+    errorCap = error;
   }
 
 }

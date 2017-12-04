@@ -33,7 +33,15 @@
             <input id="newSearchBtn" type="button" value="New Search">
           </div>
        </div>
-       
+       <div data-bind="visible: alertMessage">
+          <!-- ko if: alertMessage -->
+          <div class="alert" data-bind="style: {backgroundColor:alertMessage().type.BG_COLOR, color: alertMessage().type.COLOR}">
+            <span class="closebtn" data-bind="click: function(){alertMessage('');}">&times;</span>
+            <span data-bind="text: alertMessage().message"></span><br>
+            <span data-bind="visible: alertMessage().type.ID == 4">Stuck somewhere? <a data-bind="attr: {href:'mailto:bhosleviraj@gmail.com?subject=Neighborhood%20Project%20Issue&body='+ alertMessage().message}">Mail developer</a></span>
+          </div>
+          <!-- /ko -->
+        </div>
        <!-- sidebar div -->
        <div class="sidebar" data-bind="visible: availableRestaurants().length>0, css:{'sidebar-active':showSidebar}">
         <ul class="menu">

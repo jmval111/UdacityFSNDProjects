@@ -243,3 +243,44 @@ p{
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: #555;
 }
+
+/* The alert message box */
+.alert {
+    width: 40%;
+    text-align: center;
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    font-size: 110%;
+    font-weight: bold;
+    color: white;
+    position: fixed;
+    top: 60px;
+    left: 30%;
+    z-index: 2;
+    border: 4px solid white;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+}
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+    color: black;
+}
+
+.alert span a{
+  background-color: white;
+  padding: 2px;
+}
