@@ -104,7 +104,7 @@ var RestaurantViewModel = function(){
       // Geocode the address/area entered to get the center. Then, center the map
       // on it and zoom in
       if(!isMapVisible){
-        setAlertMessage('Please wait, the map is not fully loaded, or try reloading','INFO');
+        setAlertMessage('Please wait, the map is not loaded, or try reloading','INFO');
         return;
       }
       console.log('calling geocode');
@@ -176,11 +176,6 @@ var RestaurantViewModel = function(){
   self.clearSearch = function(){
     clearMarkers();
     clearViewModel();
-    //remove circle if any
-    if(circle!=null){
-      circle.setMap(null);
-      circle = null;
-    }
   };
 
   //to control filters control panel
@@ -213,12 +208,13 @@ function initMap() {
     zoom: 15
   });
 
-  map.addListener('bounds_changed', function(){
-    console.log('bounds_changed');
-    isMapVisible=false;});
   map.addListener('tilesloaded', function(){
     console.log('tilesloaded');
-    isMapVisible=true;});
+    isMapVisible=true;
+    google.maps.event.clearListeners(map, 'tilesloaded');
+   }
+  );
+
   infowindow = new google.maps.InfoWindow();
   // Initialize the drawing manager.
   drawingManager = new google.maps.drawing.DrawingManager({
@@ -295,39 +291,45 @@ var cbData;
 function displayRestaurants(data){
   //TODO for debug, remove later
   cbData=data;
-  if(data.results_found>0){
-    console.log("Restaurants found:"+data.results_found);
-    setAlertMessage('Found restaurants!','SUCCESS');
-    window.setTimeout(function(){restoViewModel.alertMessage('');},2000);
-    //TODO filter out of circle places
-    //populate places and markers
-    for(var i=0; i<data.results_shown; i++){
-      console.log("populating viewModel and markers");
-      var currRestaurant = new Restaurant(data.restaurants[i].restaurant);
-      console.log(currRestaurant);
-      var marker = new google.maps.Marker({
-        map: map,
-        position: {lat: currRestaurant.lat, lng: currRestaurant.lng},
-        icon: 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png'
-      });
-      marker.id = currRestaurant.id;
-      //locationList.push(locationItem);
 
-      google.maps.event.addListener(marker, 'click', function() {
-        return markerSelected(this);
-      }.bind(currRestaurant));
+  //populate places and markers
+  var isWithinCircle;
+  for(var i=0; i<data.results_shown; i++){
+    isWithinCircle = false;
+    console.log("populating viewModel and markers");
+    var currRestaurant = new Restaurant(data.restaurants[i].restaurant);
+    console.log(currRestaurant);
+    isWithinCircle = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(currRestaurant.lat,currRestaurant.lng), circle.getCenter()) <= circle.getRadius();
 
-      restoViewModel.markers.push(marker);
+    if(isWithinCircle){
+        var marker = new google.maps.Marker({
+          map: map,
+          position: {lat: currRestaurant.lat, lng: currRestaurant.lng},
+          icon: 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png'
+        });
+        marker.id = currRestaurant.id;
+        //locationList.push(locationItem);
 
-      //add restaurants cuisines to the set
-      for(var c=0;c<currRestaurant.cuisines.length;c++){
-          allCuisines.add(currRestaurant.cuisines[c]);
+        google.maps.event.addListener(marker, 'click', function() {
+          return markerSelected(this);
+        }.bind(currRestaurant));
+
+        restoViewModel.markers.push(marker);
+
+        //add restaurants cuisines to the set
+        for(var c=0;c<currRestaurant.cuisines.length;c++){
+            allCuisines.add(currRestaurant.cuisines[c]);
+        }
+
+        restoViewModel.availableRestaurants.push(currRestaurant);
       }
+  }//populated places and markers
 
-      restoViewModel.availableRestaurants.push(currRestaurant);
-
-    }//populated places and markers
-
+  var count_restaurants = restoViewModel.availableRestaurants().length;
+  if(count_restaurants>0){
+    console.log("Restaurants found:"+count_restaurants);
+    setAlertMessage('Found '+count_restaurants+' restaurants!','SUCCESS');
+    window.setTimeout(function(){restoViewModel.alertMessage('');},2000);
     var sortedCuisines = Array.from(allCuisines).sort();
     //first cuisine option should be "all"
     sortedCuisines.unshift("all");
