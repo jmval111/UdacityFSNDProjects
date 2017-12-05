@@ -44,7 +44,7 @@
           <div class="alert" data-bind="style: {backgroundColor:alertMessage().type.BG_COLOR, color: alertMessage().type.COLOR}">
             <span class="closebtn" data-bind="click: function(){alertMessage('');}">&times;</span>
             <span data-bind="text: alertMessage().message"></span><br>
-            <span data-bind="visible: alertMessage().type.ID == 4">Stuck somewhere? <a data-bind="attr: {href:'mailto:bhosleviraj@gmail.com?subject=Neighborhood%20Project%20Issue&body='+ alertMessage().message}">Mail developer at bhosleviraj@gmail.com</a></span>
+            <span style="font-size:small" data-bind="visible: alertMessage().type.ID == 4">Stuck somewhere? <a data-bind="attr: {href:'mailto:bhosleviraj@gmail.com?subject=Neighborhood%20Project%20Issue&body='+ alertMessage().message}">Mail developer at bhosleviraj@gmail.com</a></span>
           </div>
           <!-- /ko -->
         </div>
