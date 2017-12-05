@@ -176,6 +176,11 @@ var RestaurantViewModel = function(){
   self.clearSearch = function(){
     clearMarkers();
     clearViewModel();
+    //remove circle if any
+    if(circle!=null){
+      circle.setMap(null);
+      circle = null;
+    }
   };
 
   //to control filters control panel
@@ -202,6 +207,9 @@ ko.applyBindings(restoViewModel);
 
 //google calls initMap when map is loaded
 function initMap() {
+  //IE11 workaround: prevent browser auto-fill
+  $('#zoom-to-area-text').val('');
+
   map = new google.maps.Map(document.getElementById('map'), {
     //TODO create a CONSTANT for lat lng
     center: {lat: 19.190638, lng: 72.834392},
@@ -330,7 +338,14 @@ function displayRestaurants(data){
     console.log("Restaurants found:"+count_restaurants);
     setAlertMessage('Found '+count_restaurants+' restaurants!','SUCCESS');
     window.setTimeout(function(){restoViewModel.alertMessage('');},2000);
-    var sortedCuisines = Array.from(allCuisines).sort();
+    //var sortedCuisines = Array.from(allCuisines).sort();
+    //IE doesnt support Array.from, even polyfill didnt work
+    var sortedCuisines = new Array();
+    //for(let item of allCuisines){sortedCuisines.push(item);};
+    allCuisines.forEach(function(value) {
+      sortedCuisines.push(value);
+    });
+
     //first cuisine option should be "all"
     sortedCuisines.unshift("all");
     restoViewModel.availableCuisines(sortedCuisines);

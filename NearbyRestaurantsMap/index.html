@@ -5,6 +5,8 @@
     <title></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js'></script>
+    <!-- for Object.assign support in IE11 -->
+    <script src="js/polyfill.js"></script>
     <script>
     function handleMapError(){
       console.log('failed to load map');
