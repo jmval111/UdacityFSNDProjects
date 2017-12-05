@@ -1,4 +1,5 @@
 var map;
+var isMapVisible = false;
 //set won't keep duplicates :)
 var allCuisines = new Set([]);
 var drawingManager;
@@ -102,25 +103,43 @@ var RestaurantViewModel = function(){
     } else {
       // Geocode the address/area entered to get the center. Then, center the map
       // on it and zoom in
+      if(!isMapVisible){
+        setAlertMessage('Please wait, the map is not fully loaded, or try reloading','INFO');
+        return;
+      }
+      console.log('calling geocode');
       geocoder.geocode(
         { address: address,
           componentRestrictions: {country:'IN', locality: 'Mumbai'}
         }, function(results, status) {
+          console.log('zoom to area');
+          console.log(results);
+          console.log(status);
           if (status == google.maps.GeocoderStatus.OK) {
+
             map.setCenter(results[0].geometry.location);
             map.setZoom(15);
-          } else {
+          }
+          else if(status == google.maps.GeocoderStatus.ERROR){
+            setAlertMessage('Connection error!', 'ERROR');
+          }
+          else {
             //TODO put this in closable alert div
-            window.alert('We could not find that location - try entering a more' +
-                ' specific place.');
+            setAlertMessage('We could not find that location - try entering a more' +
+                ' specific place.','INFO');
           }
         });
+
     }
   };
 
   // This shows and hides (respectively) the drawing options.
   self.toggleDrawing = function() {
     console.log('toggleDrawing');
+    if(!isMapVisible){
+      setAlertMessage('Please wait, the map is not fully loaded, or try reloading','INFO');
+      return;
+    }
     if (drawingManager.map) {
       drawingManager.setMap(null);
       // In case the user drew anything, get rid of the circle
@@ -137,6 +156,10 @@ var RestaurantViewModel = function(){
   // user can specify an exact area of search.
   self.searchWithinCircle=function() {
     //hides search button to prevent overlapping searches
+     if(!isMapVisible){
+       setAlertMessage('Please wait, the map is not fully loaded, or try reloading','INFO');
+       return;
+     }
      self.isSearchMode(false);
 
      if(circle!=null){
@@ -190,6 +213,12 @@ function initMap() {
     zoom: 15
   });
 
+  map.addListener('bounds_changed', function(){
+    console.log('bounds_changed');
+    isMapVisible=false;});
+  map.addListener('tilesloaded', function(){
+    console.log('tilesloaded');
+    isMapVisible=true;});
   infowindow = new google.maps.InfoWindow();
   // Initialize the drawing manager.
   drawingManager = new google.maps.drawing.DrawingManager({
