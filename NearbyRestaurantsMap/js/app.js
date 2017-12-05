@@ -115,8 +115,8 @@ var RestaurantViewModel = function(){
           console.log('zoom to area');
           console.log(results);
           console.log(status);
+          setAlertMessage('Loading map for '+address+'..','INFO');
           if (status == google.maps.GeocoderStatus.OK) {
-
             map.setCenter(results[0].geometry.location);
             map.setZoom(15);
           }
@@ -219,7 +219,7 @@ function initMap() {
   map.addListener('tilesloaded', function(){
     console.log('tilesloaded');
     isMapVisible=true;
-    google.maps.event.clearListeners(map, 'tilesloaded');
+    restoViewModel.alertMessage('');
    }
   );
 
