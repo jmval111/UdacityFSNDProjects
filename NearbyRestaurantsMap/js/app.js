@@ -222,7 +222,15 @@ function initMap() {
     //TODO create a CONSTANT for lat lng
     styles: styles,
     center: {lat: 19.190638, lng: 72.834392},
-    zoom: 15
+    zoom: 15,
+    zoomControl: true,
+    zoomControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_CENTER
+    },
+    streetViewControl: true,
+    streetViewControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_TOP
+    }
   });
 
   map.addListener('tilesloaded', function(){
@@ -238,7 +246,7 @@ function initMap() {
     drawingMode: google.maps.drawing.OverlayType.CIRCLE,
     drawingControl: true,
     drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_LEFT,
+      position: google.maps.ControlPosition.RIGHT_CENTER,
       drawingModes: [
         google.maps.drawing.OverlayType.CIRCLE
       ]
