@@ -236,8 +236,6 @@ function initMap() {
     }
   });
 
-
-
   drawingManager.addListener('overlaycomplete', function(event) {
   // First, check if there is an existing circle.
   // If there is, get rid of it and remove the markers
@@ -349,6 +347,8 @@ function displayRestaurants(data){
     //first cuisine option should be "all"
     sortedCuisines.unshift("all");
     restoViewModel.availableCuisines(sortedCuisines);
+    map.setCenter(circle.getCenter());
+    map.fitBounds(circle.getBounds());
   }
   else{
     setAlertMessage('Sorry, No restaurants found in given area.', 'INFO');
