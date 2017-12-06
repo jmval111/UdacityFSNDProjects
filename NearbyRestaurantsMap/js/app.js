@@ -147,6 +147,7 @@ var RestaurantViewModel = function(){
         circle.setMap(null);
       }
     } else {
+      drawingManager.setDrawingMode(google.maps.drawing.OverlayType.CIRCLE);
       drawingManager.setMap(map);
     }
   };
