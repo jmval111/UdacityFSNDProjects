@@ -110,7 +110,9 @@ var RestaurantViewModel = function(){
       console.log('calling geocode');
       geocoder.geocode(
         { address: address,
-          componentRestrictions: {country:'IN', locality: 'Mumbai'}
+          componentRestrictions: {country:'IN', administrativeArea: 'Mumbai'}
+          //componentRestrictions: {country:'IT', administrativeArea : 'Lazio'}
+          //componentRestrictions: {country:'TR', administrativeArea : 'Istanbul'}
         }, function(results, status) {
           console.log('zoom to area');
           console.log(results);
@@ -222,7 +224,9 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     //TODO create a CONSTANT for lat lng
     styles: styles,
-    center: {lat: 19.190638, lng: 72.834392},
+    center: {lat: 19.190638, lng: 72.834392},//Mumbai IN
+    //center: {lat: 41.9028, lng: 12.4964},//Rome IT
+    //center: {lat: 41.008238, lng: 28.978359},//Istanbul Turkey
     zoom: 15,
     zoomControl: true,
     zoomControlOptions: {
@@ -283,9 +287,41 @@ function markerSelected(selectedLocn){
 
     infowindow.open(map, marker);
     restoViewModel.selectedRestaurant(selectedLocn);
-    infowindow.setContent('<div><strong>' + selectedLocn.name + '</strong><br>' +
-      'Cost for two: ' + selectedLocn.average_cost_for_two + '<br>' +
-      selectedLocn.user_rating.aggregate_rating + '</div>');
+    infowindow.setContent('<div class="info-window">'+
+                          '<p class="info-title" style="background-color:#'+selectedLocn.user_rating.rating_color+'">'+selectedLocn.name+'</p>'+
+                              '<div class="info-details">'+
+                                '<p class="info-item">'+
+                                  '<span class="iconified cuisine-icon"></span>'+
+                                  '<span class="info-item-title">Cuisines:</span>'+
+                                  selectedLocn.cuisines+
+                                '</p>'+
+                                '<p class="info-item">'+
+                                  '<span class="iconified rating-icon"></span>'+
+                                  '<span class="info-item-title">Rating:</span>'+
+                                  selectedLocn.user_rating.aggregate_rating+
+                                '</p>'+
+                                '<p class="info-item">'+
+                                  '<span class="iconified cost-icon"></span>'+
+                                  '<span class="info-item-title">Cost for two:</span>'+
+                                  selectedLocn.currency+
+                                  (selectedLocn.average_cost_for_two?selectedLocn.average_cost_for_two:'N/A')+
+                                '</p>'+
+                                '<p class="info-item">'+
+                                  '<span class="iconified menu-icon"></span>'+
+                                  '<span class="info-item-title"><a target="_blank" href="'+selectedLocn.menu_url+'">Menu</a></span>'+
+                                '</p>'+
+                                '<p class="info-item">'+
+                                  '<span class="iconified '+(selectedLocn.has_online_delivery?'checked-icon':'unchecked-icon')+'"></span>'+
+                                  '<span class="info-item-title">Online Delivery</span>'+
+                                '</p>'+
+                                '<p class="info-item">'+
+                                  '<span class="iconified '+(selectedLocn.has_table_booking?'checked-icon':'unchecked-icon')+'"></span>'+
+                                  '<span class="info-item-title">Table Booking</span>'+
+                                '</p>'+
+                              '</div>'+
+                            '</div>'
+                          );
+
  }
 }
 
@@ -363,7 +399,7 @@ function displayRestaurants(data){
     });
 
     //first cuisine option should be "all"
-    sortedCuisines.unshift("all");
+    sortedCuisines.sort().unshift("all");
     restoViewModel.availableCuisines(sortedCuisines);
     map.setCenter(circle.getCenter());
     map.fitBounds(circle.getBounds());

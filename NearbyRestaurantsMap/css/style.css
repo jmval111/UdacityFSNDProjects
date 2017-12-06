@@ -284,3 +284,76 @@ p{
   color: white;
   padding: 2px;
 }
+
+/*Info window style*/
+html,body {
+  font-family: Arial, sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+ }
+
+.info-window{
+  font-size: 100%;
+  max-width: : 250px;
+  margin: 10px auto 0px auto;
+  border: 1px solid;
+  border-radius: 10px;
+  overflow-wrap: break-word;
+}
+
+.info-title{
+  margin: 0px;
+  font-weight: bold;
+  font-size: 120%;
+  text-align: center;
+  color: white;
+  background-color: #cdd614;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+.info-item{
+  margin: 0px;
+  border-bottom: 1px solid;
+  padding: 4px;
+}
+
+.info-item:last-child{
+  border-bottom: none;
+}
+
+.info-item-title{
+  font-weight: bold;
+}
+
+.iconified{
+  background: transparent scroll no-repeat left center;
+  padding: 2px 0px 2px 20px;
+  margin-right: 4px;
+  background-size: 20px 20px;
+}
+
+.rating-icon{
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Antu_org.kde.plasma.awesomewidget.svg/180px-Antu_org.kde.plasma.awesomewidget.svg.png') ;
+}
+
+.cost-icon{
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Emojione_1F4B5.svg/120px-Emojione_1F4B5.svg.png') ;
+}
+
+.cuisine-icon{
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/AB-Rast.svg/240px-AB-Rast.svg.png') ;
+}
+
+.menu-icon{
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Plattter.png/180px-Plattter.png');
+}
+
+.checked-icon{
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Green_check.svg/240px-Green_check.svg.png');
+}
+
+.unchecked-icon{
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Arbcom_ru_withdrawn.svg/240px-Arbcom_ru_withdrawn.svg.png');
+}
