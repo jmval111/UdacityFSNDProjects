@@ -210,8 +210,17 @@ function initMap() {
   //IE11 workaround: prevent browser auto-fill
   $('#zoom-to-area-text').val('');
 
+  //map styles, hide businesses
+  var styles = [
+      {
+        featureType: 'poi.business',
+        stylers : [{visibility: 'off'}]
+      }
+  ];
+
   map = new google.maps.Map(document.getElementById('map'), {
     //TODO create a CONSTANT for lat lng
+    styles: styles,
     center: {lat: 19.190638, lng: 72.834392},
     zoom: 15
   });
