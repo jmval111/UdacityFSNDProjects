@@ -186,7 +186,7 @@ var RestaurantViewModel = function(){
       circle.setMap(null);
       circle = null;
     }
-    if(drawingManager.getMap() == null){
+    if(!drawingManager.map){
       drawingManager.setMap(map);
     }
     drawingManager.setDrawingMode(google.maps.drawing.OverlayType.CIRCLE);
