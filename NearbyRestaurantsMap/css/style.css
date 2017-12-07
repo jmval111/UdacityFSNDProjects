@@ -21,6 +21,14 @@ html,body {
   margin-top: 5px;
 }
 
+@media only screen
+  and (max-device-width: 350px) {
+    #fixed-header h1{
+      font-size: 150%;
+      margin-top: 8px;
+    }
+}
+
 .container {
     height: 100%;
     position: relative;
