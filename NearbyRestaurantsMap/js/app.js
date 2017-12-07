@@ -54,12 +54,15 @@ var RestaurantViewModel = function(){
   self.availableMinCost = ko.observable(0);
   self.availableMaxCost = ko.observable(0);
   self.selectedMaxCost = ko.observable(0);
+  self.selectedMinRating = ko.observable(0);
   self.filteredRestaurants = ko.computed(function(){
     return self.availableRestaurants().filter(function(restaurant){
       return (
         ((self.selectedCuisine() === "all") || (restaurant.cuisines.indexOf(self.selectedCuisine())>-1))
         &&
         (restaurant.average_cost_for_two<=self.selectedMaxCost())
+        &&
+        (restaurant.user_rating.aggregate_rating >= self.selectedMinRating())
       );
     });
   });
@@ -194,6 +197,7 @@ var RestaurantViewModel = function(){
     restoViewModel.availableMinCost(0);
     restoViewModel.availableMaxCost(0);
     restoViewModel.selectedMaxCost(0);
+    restoViewModel.selectedMinRating(0);
   };
 
   //to control filters control panel
