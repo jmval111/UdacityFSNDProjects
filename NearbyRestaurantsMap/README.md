@@ -221,7 +221,10 @@ geocoder.geocode(
 Change `componentRestrictions` as per the city specified in first step with country code and city name.<br>
 
 # Code Attribution
-Zoom in location code inspired by Udacity's repo https://github.com/udacity/ud864
+- Zoom in location code inspired by Udacity's repo https://github.com/udacity/ud864
+- Bouncing arrow inspired by https://codepen.io/dodozhang21/pen/siKtp
+- Custom scrollbar inspired by https://codepen.io/devstreak/pen/dMYgeO
+
 
 # Possible Enhancements
 * Add place-autocomplete for zoom text box, [reference](https://developers.google.com/maps/documentation/javascript/places-autocomplete)
