@@ -21,32 +21,38 @@ NearbyRestaurantsMap web app enables users to search the restaurants:fork_and_kn
 Getting restaurants, bars, cafes in the area in three simple steps:<br>
 **Note:** Open **index.html** in javascript enabled browser.
 1. Click the **bouncing down arrow** on the top right corner, to open options box.
+
 <details>
   <summary>Screenshot</summary>
-  ![Options box](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/OptionsBox.JPG)
+  <img alt="Option Box" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/OptionsBox.JPG">
 </details>
+
 2. Click **Drawing Tools** and draw a circle on the map.
+
 <details>
   <summary>Screenshot</summary>
-  ![Draw Circle](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/DrawCircle.JPG)
+  <img alt="Draw Circle" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/DrawCircle.JPG">
 </details>
+
 3. Click **Search Restaurants**
+
 <details>
   <summary>Screenshot</summary>
-  ![Search Restaurants](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/SearchedMarkers.JPG)
+  <img alt="Search Restaurants" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/SearchedMarkers.JPG">
 </details>
+
 <br>
 In a happy scenario, you should get a list of restaurants within the circle and new filter button on the left. Click it to explore filter options.
 <details>
   <summary>Screenshot</summary>
-  ![Filters](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/Filter.JPG)
+  <img alt="Filters" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/Filter.JPG">
 </details>
 
 ## Detailed Walkthrough
 ### Zoom into location
 <details>
   <summary>Screenshot</summary>
-  ![Enter Zoom in Text](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/EnterZoomText.JPG)
+  <img alt="Enter Zoom in Text" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/EnterZoomText.JPG">
 </details>
 
 #### Usage
@@ -54,12 +60,12 @@ Given location is loaded and the map is centered on it.
 
 #### Restrictions
 Zoom navigation is restricted to the places specified by the `componentRestrictions` in the code.<br>
-It is currently set to the city: ** Mumbai, India **
+It is currently set to the city: **Mumbai, India**
 
 ## Drawing a circle on the map
 <details>
   <summary>Screenshot</summary>
-  ![Drawing Tools Circle](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/DrawCircle.JPG)
+  <img alt="Drawing Tools Circle" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/DrawCircle.JPG">
 </details>
 
 #### Usage
@@ -71,7 +77,7 @@ Only one circle is allowed at a time.
 ## Searching Restaurants
 <details>
   <summary>Screenshot</summary>
-  ![Searched Markers](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/SearchedMarkers.JPG)
+  <img alt="Searched Markers" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/SearchedMarkers.JPG">
 </details>
 
 #### Usage
@@ -83,7 +89,7 @@ Zomato's free API key fetches maximum 20 locations. The locations are sorted by 
 ### Filter Options Sidebar
 <details>
   <summary>Screenshot</summary>
-  ![FILTER Sidebar](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/LeftSidebar.JPG)
+  <img alt="FILTER Sidebar" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/LeftSidebar.JPG">
 </details>
 
 #### Usage
@@ -93,10 +99,12 @@ Once locations are plotted, **FILTER** sidebar button is visible on the left. Cl
 2. **list** of all filtered places.
 
 ### Filter Menu
+
 <details>
   <summary>Screenshot</summary>
-  ![Filter options](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/Filter.JPG)
+  <img alt="Filter options" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/Filter.JPG">
 </details>
+
 The visible list of places on the sidebar and markers on the map satisfies all the selected filter conditions.
 #### Options
 1. Filter by **Cuisine Type** , ex. all, bakery:cake:, cafe:coffee:, pizza:pizza:
@@ -104,11 +112,14 @@ The visible list of places on the sidebar and markers on the map satisfies all t
 3. Filter by **Minimum Rating** :star:, between 0-5
 
 ### Information window
+
 <details>
   <summary>Screenshot</summary>
-  ![InfoWindow](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/InfoWindow.JPG)
+  <img alt="InfoWindow" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/InfoWindow.JPG">
 </details>
+
 Clicking on the listed restaurant name  or the marker plotted on the map, the restaurant is highlighted and details about the corresponding restaurant pop up.
+
 ### New Search
 After a successful search, top right option box offers only a **New Search** option.<br>
 On clicking **New Search** , previous search results are cleared.
