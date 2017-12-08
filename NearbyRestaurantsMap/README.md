@@ -15,21 +15,21 @@ NearbyRestaurantsMap web app enables users to search the restaurants:fork_and_kn
 - [Possible Enhancements](#possible-enhancements)
 
 # Usage Walkthrough
-**Note:** Zomato uses [OpenStreetMap](https://www.openstreetmap.org/), plotted markers location could be slightly different when viewed on Google Map.
+** Note: ** Zomato uses [OpenStreetMap](https://www.openstreetmap.org/), plotted markers location could be slightly different when viewed on Google Map.
 ## Quick Start
 Getting restaurants, bars, cafes in the area in three simple steps:<br>
-**Note:** Open **index.html** in javascript enabled browser.
-1. Click the **bouncing down arrow** on the top right corner, to open options box.
+** Note: ** Open ** index.html ** in javascript enabled browser.
+1. Click the ** bouncing down arrow ** on the top right corner, to open options box.
 <details>
   <summary>Screenshot</summary>
   ![Options box](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/OptionsBox.JPG)
 </details>
-2. Click **Drawing Tools** and draw a circle on the map.
+2. Click ** Drawing Tools ** and draw a circle on the map.
 <details>
   <summary>Screenshot</summary>
   ![Draw Circle](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/DrawCircle.JPG)
 </details>
-3. Click **Search Restaurants**
+3. Click ** Search Restaurants **
 <details>
   <summary>Screenshot</summary>
   ![Search Restaurants](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/SearchedMarkers.JPG)
@@ -51,7 +51,7 @@ In a happy scenario, you should get a list of restaurants within the circle and 
 Given location is loaded and the map is centered on it.
 #### Restrictions
 Zoom navigation is restricted to the places specified by the `componentRestrictions` in the code.<br>
-It is currently set to the city: **Mumbai, India**
+It is currently set to the city: ** Mumbai, India **
 
 ## Drawing a circle on the map
 <details>
@@ -79,10 +79,10 @@ Zomato's free API key fetches maximum 20 locations. The locations are sorted by 
   ![FILTER Sidebar](https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/LeftSidebar.JPG)
 </details>
 #### Usage
-Once locations are plotted, **FILTER** sidebar button is visible on the left. Click it and sidebar will slide in.<br><br>
-**Sidebar displays:**
-1. an expandable **Filter menu**
-2. **list** of all filtered places.
+Once locations are plotted, ** FILTER ** sidebar button is visible on the left. Click it and sidebar will slide in.<br><br>
+** Sidebar displays: **
+1. an expandable ** Filter menu **
+2. ** list ** of all filtered places.
 
 ### Filter Menu
 <details>
@@ -91,9 +91,9 @@ Once locations are plotted, **FILTER** sidebar button is visible on the left. Cl
 </details>
 The visible list of places on the sidebar and markers on the map satisfies all the selected filter conditions.
 #### Options
-1. Filter by **Cuisine Type**, ex. all, bakery:cake:, cafe:coffee:, pizza:pizza:
-2. Filter by **Max cost for two**:dollar:, between the minimum and maximum costs of the obtained places.
-3. Filter by **Minimum Rating**:star:, between 0-5
+1. Filter by ** Cuisine Type ** , ex. all, bakery:cake:, cafe:coffee:, pizza:pizza:
+2. Filter by ** Max cost for two ** :dollar:, between the minimum and maximum costs of the obtained places.
+3. Filter by ** Minimum Rating ** :star:, between 0-5
 
 ### Information window
 <details>
@@ -102,30 +102,30 @@ The visible list of places on the sidebar and markers on the map satisfies all t
 </details>
 Clicking on the listed restaurant name  or the marker plotted on the map, the restaurant is highlighted and details about the corresponding restaurant pop up.
 ### New Search
-After a successful search, top right option box offers only a **New Search** option.<br>
-On clicking **New Search**, previous search results are cleared.
+After a successful search, top right option box offers only a ** New Search ** option.<br>
+On clicking ** New Search ** , previous search results are cleared.
 
 # Technologies
-* **Web technologies:** HTML, CSS, Javascript
-* **Javascript libraries/frameworks:** JQuery, KnockoutJS
-* **APIs:** GOOGLE MAP Javascript API, ZOMATO API
+* ** Web technologies: ** HTML, CSS, Javascript
+* ** Javascript libraries/frameworks: ** JQuery, KnockoutJS
+* ** APIs: ** GOOGLE MAP Javascript API, ZOMATO API
 
 # About APIs Used _(as of 2017)_
 ## Google Maps Javascript API
-With Google Maps API, you can create **interactive applications using Google maps**.<br>
+With Google Maps API, you can create ** interactive applications using Google maps ** .<br>
 It provides various libraries:
-- **drawing** provides a graphical interface for users to draw polygons, rectangles, polylines, circles, and markers on the map.
-- **geometry** includes utility functions for calculating scalar geometric values (such as distance and area) on the surface of the earth.
-- **places** enable your application to search for places such as establishments, geographic locations, or prominent points of interest, within a defined area.
-- **visualization** provides heatmaps for visual representation of data.<br>
+- ** drawing ** provides a graphical interface for users to draw polygons, rectangles, polylines, circles, and markers on the map.
+- ** geometry ** includes utility functions for calculating scalar geometric values (such as distance and area) on the surface of the earth.
+- ** places ** enable your application to search for places such as establishments, geographic locations, or prominent points of interest, within a defined area.
+- ** visualization ** provides heatmaps for visual representation of data.<br>
 
 For detailed documentation visit [Google Maps API](https://developers.google.com/maps/documentation/javascript/).
 
 ## ZOMATO API for restaurants data
-Zomato APIs provides most exhaustive information for **over 1.5 million restaurants across 23 countries and 10,000 cities globally**. With the Zomato APIs, you can:
-* **Search** for restaurants by name, cuisine, or location
-* **Display detailed information** including ratings, location and cuisine
-* Use the Zomato **Foodie Index** to show great areas to dine in a city
+Zomato APIs provides most exhaustive information for ** over 1.5 million restaurants across 23 countries and 10,000 cities globally **. With the Zomato APIs, you can:
+* ** Search ** for restaurants by name, cuisine, or location
+* ** Display detailed information ** including ratings, location and cuisine
+* Use the Zomato ** Foodie Index ** to show great areas to dine in a city
 
 For usage details, visit [Zomato API](https://developers.zomato.com/api)
 
@@ -134,18 +134,18 @@ For usage details, visit [Zomato API](https://developers.zomato.com/api)
 ### Get the GOOGLE MAP API key
 1. Visit https://console.developers.google.com
 2. Sign in with your Google - i.e. yourname@gmail.com. If you don't have one, you can go to accounts.google.com to create one for free.
-3. Visit https://developers.google.com/maps/documentation/javascript/libraries and click **GET KEY**
+3. Visit https://developers.google.com/maps/documentation/javascript/libraries and click ** GET KEY **
 
-4. **Enable Google Maps Javascript API** window pops up.<br>
+4. ** Enable Google Maps Javascript API ** window pops up.<br>
 Specify a descriptive project name. Read and accept the terms and conditions.
 
 5. All Set!<br>
-Copy the generated API KEY. This action automatically enables **Google Maps Javascript API and Geocoding API.**
+Copy the generated API KEY. This action automatically enables ** Google Maps Javascript API and Geocoding API. **
 
 #### Restrict GOOGLE MAP API KEY [optional]
 1. Go to https://console.developers.google.com, it will land on the dashboard.
 
-2. Select the project you created. Then **Credentials.**
+2. Select the project you created. Then ** Credentials. **
 3. Now you can restrict the API KEY usage to your application server only.
 
 ### Get the ZOMATO API key
@@ -155,17 +155,17 @@ Copy the generated API KEY. This action automatically enables **Google Maps Java
 4. You can instantly experiment with the API on documentation page https://developers.zomato.com/documentation
 
 ## Place the API Keys
-1. In :pencil:**index.html**, look for `key=GOOGLE_MAP_API_KEY`, in the &lt;script&gt; tag nearly at the end of the HTML file. Replace the `GOOGLE_MAP_API_KEY` with your Google Map Key. Don't add any spaces around.
+1. In :pencil: ** index.html ** , look for `key=GOOGLE_MAP_API_KEY`, in the &lt;script&gt; tag nearly at the end of the HTML file. Replace the `GOOGLE_MAP_API_KEY` with your Google Map Key. Don't add any spaces around.
 
-2. In :pencil:**js/thirdPartyAPI.js**, look for `ZOMATO_API_KEY = 'PASTE_ZOMATO_KEY';`
+2. In :pencil: ** js/thirdPartyAPI.js ** , look for `ZOMATO_API_KEY = 'PASTE_ZOMATO_KEY';`
 Replace `PASTE_ZOMATO_KEY` with your ZOMATO KEY. Again no spaces around.
 
 ## Load the map of different city
-**Current setup is for Mumbai, India**<br>
-:bulb:**Tip:** Use [Google's geocode tool](https://google-developers.appspot.com/maps/documentation/utils/geocoder/) to get the lat/longs, country code, and administrativeArea.<br>
-:warning:**Important Note:** Only use the countries for which **Zomato** data is available.
+** Current setup is for Mumbai, India ** <br>
+:bulb: ** Tip: ** Use [Google's geocode tool](https://google-developers.appspot.com/maps/documentation/utils/geocoder/) to get the lat/longs, country code, and administrativeArea.<br>
+:warning:** Important Note: ** Only use the countries for which ** Zomato ** data is available.
 For details, visit [Zomato](https://www.zomato.com/about).
-1. In :pencil:**js/app.js**, `initMap` function, put the latitude and longitude of the city in `{lat: , lng: }`
+1. In :pencil: ** js/app.js ** , `initMap` function, put the latitude and longitude of the city in `{lat: , lng: }`
 ```Javascript
 map = new google.maps.Map(document.getElementById('map'), {
   styles: styles,
@@ -175,7 +175,7 @@ map = new google.maps.Map(document.getElementById('map'), {
 }
 ```
 
-2. In :pencil:**js/app.js**, look for the following code:
+2. In :pencil: ** js/app.js ** , look for the following code:
 ```Javascript
 geocoder.geocode(
         { address: address,
