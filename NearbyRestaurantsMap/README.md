@@ -12,6 +12,7 @@ NearbyRestaurantsMap web app enables users to search the restaurants:fork_and_kn
   - [Get API KEYs:key:](#get-api-keys)
   - [Place the API Keys](#place-the-api-keys)
   - [Load the map of different city](#load-the-map-of-different-city)
+- [Code Attribution](#code-attribution)
 - [Possible Enhancements](#possible-enhancements)
 
 # Usage Walkthrough
@@ -218,6 +219,9 @@ geocoder.geocode(
 }
 ```
 Change `componentRestrictions` as per the city specified in first step with country code and city name.<br>
+
+# Code Attribution
+Zoom in location code inspired by Udacity's repo https://github.com/udacity/ud864
 
 # Possible Enhancements
 * Add place-autocomplete for zoom text box, [reference](https://developers.google.com/maps/documentation/javascript/places-autocomplete)
