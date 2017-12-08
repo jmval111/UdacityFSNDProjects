@@ -153,24 +153,39 @@ For usage details, visit [Zomato API](https://developers.zomato.com/api)
 1. Visit https://console.developers.google.com
 2. Sign in with your Google - i.e. yourname@gmail.com. If you don't have one, you can go to accounts.google.com to create one for free.
 3. Visit https://developers.google.com/maps/documentation/javascript/libraries and click **GET KEY**
+    <details>
+      <summary>Screenshot</summary>
+      <img alt="GET GOOGLE API KEY" src="https://github.com/vbhosle/vbhosle.github.io/blob/master/NearbyRestaurantsMapDoc/googleapi/GetKey.JPG">
+    </details>
 
 4. **Enable Google Maps Javascript API** window pops up.<br>
 Specify a descriptive project name. Read and accept the terms and conditions.
+    <details>
+      <summary>Screenshot</summary>
+      <img alt="New Project" src="https://github.com/vbhosle/vbhosle.github.io/blob/master/NearbyRestaurantsMapDoc/googleapi/NewProject.JPG">
+    </details>
 
 5. All Set!<br>
 Copy the generated API KEY. This action automatically enables **Google Maps Javascript API and Geocoding API.**
+    <details>
+      <summary>Screenshot</summary>
+      <img alt="All Set" src="https://github.com/vbhosle/vbhosle.github.io/blob/master/NearbyRestaurantsMapDoc/googleapi/AllSet.JPG">
+    </details>
 
 #### Restrict GOOGLE MAP API KEY [optional]
 1. Go to https://console.developers.google.com, it will land on the dashboard.
-
 2. Select the project you created. Then **Credentials.**
+    <details>
+      <summary>Screenshot</summary>
+      <img alt="Restrict KEY" src="https://github.com/vbhosle/vbhosle.github.io/blob/master/NearbyRestaurantsMapDoc/googleapi/RestrictKey.JPG">
+    </details>
 3. Now you can restrict the API KEY usage to your application server only.
 
 ### Get the ZOMATO API key
 1. Go to https://developers.zomato.com/api
 2. Sign in using existing Google/Facebook account or create a new account. If you are using existing accounts, allow ZOMATO access to your age and language.
 3. Enter your details to get the API KEY.
-4. You can instantly experiment with the API on documentation page https://developers.zomato.com/documentation
+4. You can experiment with the API right away on [documentation page](https://developers.zomato.com/documentation)
 
 ## Place the API Keys
 1. In :pencil: **index.html** , look for `key=GOOGLE_MAP_API_KEY`, in the &lt;script&gt; tag nearly at the end of the HTML file. Replace the `GOOGLE_MAP_API_KEY` with your Google Map Key. Don't add any spaces around.
