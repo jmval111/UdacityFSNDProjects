@@ -125,7 +125,8 @@ On clicking **New Search** , previous search results are cleared.
 * **Javascript libraries/frameworks:** JQuery, KnockoutJS
 * **APIs:** GOOGLE MAP Javascript API, ZOMATO API
 
-# About APIs Used _(as of 2017)_
+# About APIs Used
+_(as of 2017)_
 ## Google Maps Javascript API
 With Google Maps API, you can create **interactive applications using Google maps** .<br>
 It provides various libraries:
@@ -146,7 +147,7 @@ For usage details, visit [Zomato API](https://developers.zomato.com/api)
 
 # Project Setup
 
-## Get API KEYs:key:
+## Get API KEYs
 
 ### Get the GOOGLE MAP API key
 1. Visit https://console.developers.google.com
