@@ -48,10 +48,10 @@ In a happy scenario, you should get a list of restaurants within the circle and 
 
 ## Detailed Walkthrough
 ### Zoom into location
-    <details>
-      <summary>Screenshot</summary>
-      <img alt="Enter Zoom in Text" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/EnterZoomText.JPG">
-    </details>
+  <details>
+    <summary>Screenshot</summary>
+    <img alt="Enter Zoom in Text" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/EnterZoomText.JPG">
+  </details>
 
 #### Usage
 Given location is loaded and the map is centered on it.
@@ -61,10 +61,10 @@ Zoom navigation is restricted to the places specified by the `componentRestricti
 It is currently set to the city: **Mumbai, India**
 
 ## Drawing a circle on the map
-    <details>
-      <summary>Screenshot</summary>
-      <img alt="Drawing Tools Circle" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/DrawCircle.JPG">
-    </details>
+  <details>
+    <summary>Screenshot</summary>
+    <img alt="Drawing Tools Circle" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/DrawCircle.JPG">
+  </details>
 
 #### Usage
 Enables you to draw, resize and reposition a circle on the map.
@@ -73,10 +73,10 @@ Enables you to draw, resize and reposition a circle on the map.
 Only one circle is allowed at a time.
 
 ## Searching Restaurants
-    <details>
-      <summary>Screenshot</summary>
-      <img alt="Searched Markers" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/SearchedMarkers.JPG">
-    </details>
+  <details>
+    <summary>Screenshot</summary>
+    <img alt="Searched Markers" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/SearchedMarkers.JPG">
+  </details>
 
 #### Usage
 Enables you to draw, resize and reposition a circle on the map.
@@ -85,10 +85,10 @@ Enables you to draw, resize and reposition a circle on the map.
 Zomato's free API key fetches maximum 20 locations. The locations are sorted by ascending order of the distance from the center of the circle. In the case of a circle covering a very large area, the locations may be dense near the center.
 
 ### Filter Options Sidebar
-    <details>
-      <summary>Screenshot</summary>
-      <img alt="FILTER Sidebar" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/LeftSidebar.JPG">
-    </details>
+  <details>
+    <summary>Screenshot</summary>
+    <img alt="FILTER Sidebar" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/LeftSidebar.JPG">
+  </details>
 
 #### Usage
 Once locations are plotted, **FILTER** sidebar button is visible on the left. Click it and sidebar will slide in.<br><br>
@@ -97,10 +97,10 @@ Once locations are plotted, **FILTER** sidebar button is visible on the left. Cl
 2. **list** of all filtered places.
 
 ### Filter Menu
-    <details>
-      <summary>Screenshot</summary>
-      <img alt="Filter options" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/Filter.JPG">
-    </details>
+  <details>
+    <summary>Screenshot</summary>
+    <img alt="Filter options" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/Filter.JPG">
+  </details>
 
 The visible list of places on the sidebar and markers on the map satisfies all the selected filter conditions.
 #### Options
@@ -109,10 +109,10 @@ The visible list of places on the sidebar and markers on the map satisfies all t
 3. Filter by **Minimum Rating** :star:, between 0-5
 
 ### Information window
-      <details>
-        <summary>Screenshot</summary>
-        <img alt="InfoWindow" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/InfoWindow.JPG">
-      </details>
+  <details>
+    <summary>Screenshot</summary>
+    <img alt="InfoWindow" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/walkthrough/InfoWindow.JPG">
+  </details>
 
 Clicking on the listed restaurant name  or the marker plotted on the map, the restaurant is highlighted and details about the corresponding restaurant pop up.
 
