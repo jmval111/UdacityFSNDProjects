@@ -147,9 +147,13 @@ ex. http://localhost:8100/category/1/items/JSON
 3. https://console.developers.google.com lands you on a dashboard. Now create a new project with **Select Project >> + icon**
 
   <details>
-    <summary>Screenshot</summary>
-    <img alt="dashboard" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/itemCatalogDocs/GoogleDevToolsDashboard.JPG">
-    <img alt="new project" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/itemCatalogDocs/GoogleProject.JPG">
+    <summary>Dashboard Screenshot</summary>
+    <img alt="dashboard" src="https://vbhosle.github.io/itemCatalogDoc/GoogleDevToolsDashboard.JPG">
+  </details>
+  
+  <details>
+    <summary>New Project Screenshot</summary>
+    <img alt="new project" src="https://vbhosle.github.io/itemCatalogDoc/GoogleProject.JPG">
   </details>
 
 4. Configure OAuth consent screen for project<br>
@@ -157,8 +161,8 @@ ex. http://localhost:8100/category/1/items/JSON
    **Required fields:** Email address and Product name visbile to users
 
    <details>
-     <summary>Screenshot</summary>
-     <img alt="oauth consent" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/itemCatalogDocs/OauthConsent.JPG">
+     <summary>OAuth consent Screenshot</summary>
+     <img alt="oauth consent" src="https://vbhosle.github.io/itemCatalogDoc/OauthConsent.JPG">
    </details>
 
 5. Get OAuth Client ID<br>
@@ -170,10 +174,19 @@ ex. http://localhost:8100/category/1/items/JSON
   6. Create!! Save this json as google_client_secret.json
 
   <details>
-    <summary>Screenshot</summary>
-    <img alt="create credentials" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/itemCatalogDocs/CreateCredentials.JPG">
-    <img alt="oauth clientid" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/itemCatalogDocs/OAuthClientID.JPG">
-    <img alt="download json" src="https://vbhosle.github.io/NearbyRestaurantsMapDoc/itemCatalogDocs/OAuthdownloadJson.JPG">
+    <summary>Create Credentials Screenshot</summary>
+    <img alt="create credentials" src="https://vbhosle.github.io/itemCatalogDoc/CreateCredentials.JPG">
+  </details>
+  
+  <details>
+    <summary>OAuth ClientID Screenshot</summary>
+    <img alt="oauth clientid" src="https://vbhosle.github.io/itemCatalogDoc/OAuthClientID.JPG"><br>
+    <img alt="download json" src="https://vbhosle.github.io/itemCatalogDoc/OAuthdownloadJson.JPG">
+  </details>
+  
+  <details>
+    <summary>Download JSON Screenshot</summary>
+    <img alt="download json" src="https://vbhosle.github.io/itemCatalogDoc/OAuthdownloadJson.JPG">
   </details>
 
 
