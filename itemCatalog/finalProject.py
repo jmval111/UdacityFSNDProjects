@@ -46,7 +46,8 @@ def addCategory():
         if not name:
             flash('Add CategoryError: Name can\'t be empty')
             return redirect(url_for('showCategories'))
-        newCategory = Category(name=name, description=description, user_id=login_session['user_id'])
+        newCategory = Category(name=name, description=description,
+                               user_id=login_session['user_id'])
         session.add(newCategory)
         session.commit()
         flash('Added Category \'{}\' Successfully!'.format(newCategory.name))
@@ -128,7 +129,8 @@ def showItems(category_id):
         return render_template("publicShowItems.html", category=category,
                                items=items)
 
-    return render_template("showItems.html", category=category, items=items, logged_in_user_id=login_session['user_id'])
+    return render_template("showItems.html", category=category, items=items,
+                           logged_in_user_id=login_session['user_id'])
 
 
 @app.route('/category/<int:category_id>/item/add', methods=['GET', 'POST'])
@@ -424,5 +426,5 @@ def getItemJSON(category_id, item_id):
 
 if __name__ == '__main__':
     app.debug = True
-    app.secret_key = '\x87{\xfc\xc9\x94\x10.\x12$R\x1b\x8d\x8a\xe2\x81\x82\xc9vD\x15\x95\x85\xb0\x16'
+    app.secret_key = '\x87{\xfc\xc9\x94\x10.\x12$R\x1b\x8d\x8a\xe2\x81\x82'
     app.run(host='0.0.0.0', port=8100)
