@@ -19,6 +19,7 @@ It is an web application that maintains categories and items for authorized user
   - [Place the OAuth details](#place-the-oauth-details)
   - [Change host and port (Optional)](#change-host-and-port)
   - [Start Flask Server](#start-flask-server)
+- Attributions
 
 # Features
 - View categories and items added by all the users.
@@ -276,3 +277,6 @@ Vagrant.configure("2") do |config|
 
 ## Start Flask Server
 Execute **finalProject.py** with command **python finalProject.py** to run the Flask web server. In your browser visit `http://localhost:<port>` (default is http://localhost:8100) to view the item catalog  app.  You should be able login with your email id and view, add, edit, and delete items and categories.
+
+# Attributions:
+OAuth and CRUD code inspired by Udacity's repo https://github.com/udacity/ud330
