@@ -7,18 +7,18 @@ It is an web application that maintains categories and items for authorized user
 - [JSON Endpoints](#json-endpoints)
 - [Technologies](#technologies)
 - [Prerequisite](#prerequisite)
-  - [Get Google OAuth details](get-google-oauth-details)
-  - [Use Preconfigured VM](#use preconfigured-vm) <br>
+  - [Get Google OAuth Details](#get-google-oauth-details)
+  - [Use Preconfigured VM](#use-preconfigured-vm) <br>
   OR
   - [Install required packages](#install-required-packages)
 - [Project setup](#project-setup)
-  - [Clone the repository](#clone-the-repository)
+  - [Clone The Project](#clone-the-project)
   - [Database setup](#database-setup)
     - [Initialize database](#initialize-database)
-    - [Populate database (Optional)](#populate-database-optional)
+    - [Populate database (Optional)](#populate-database)
   - [Place the OAuth details](#place-the-oauth-details)
-  - [Change host and port (optional)](#change-host-and-port-optional)
-  - [Start Server](#start-server)
+  - [Change host and port (Optional)](#change-host-and-port)
+  - [Start Flask Server](#start-flask-server)
 
 # Features
 - View categories and items added by all the users.
@@ -60,7 +60,7 @@ GET URL: http://localhost:8100/categories/JSON
   </details>
 
 ### Get category with specific id:
-GET URL (for id=1): http://localhost:8100/category/&lt;int:category_id>/JSON <br>
+GET URL : `http://localhost:8100/category/<int:category_id>/JSON`<br>
 ex. http://localhost:8100/category/1/JSON
 
   <details>
@@ -78,7 +78,7 @@ ex. http://localhost:8100/category/1/JSON
   </details>
 
 ### Get all the items for a category id:
-GET URL (for id=1): http://localhost:8100/category/&lt;int:category_id>/items/JSON <br>
+GET URL: `http://localhost:8100/category/<int:category_id>/items/JSON` <br>
 ex. http://localhost:8100/category/1/items/JSON
 
   <details>
@@ -116,7 +116,7 @@ ex. http://localhost:8100/category/1/items/JSON
   </details>
 
   ### Get an item with category_id and item_id:
-  GET URL (for id=1): http://localhost:8100/category/&lt;int:category_id>/item/&lt;int:item_id>/JSON <br>
+  GET URL: `http://localhost:8100/category/<int:category_id>/item/<int:item_id>/JSON` <br>
   ex. http://localhost:8100/category/1/item/1/JSON
 
   <details>
@@ -238,7 +238,8 @@ cd into the `itemCatalog` project directory, where **database_setup.py** file is
 Execute **database_setup.py** file with the command `python database_setup.py` to initialize the database.
 **itemcatalog.db** file will be created in the same directory.
 
-### Populate database (Optional)
+### Populate database
+**(Optional)**<br>
 **Note:** Without this step, there is no data to display. It has to be added by authenticating user and create operation from the web app.<br>
 **Note:** As app uses Google OAuth, please use only Google email id.<br>
 Edit **populateCatalog.py**, put your Google mail id in place of **xyz@gmail.com**<br>
@@ -248,7 +249,8 @@ Execute  **populateCatalog.py** with the command `python populateCatalog.py` to 
 1. Replace existing google_client_secret.json with the json file obtained from Google developers account. Json file name has to be **google_client_secret.json**
 2. In templates/login.html replace **CLIENT_ID** with the value of **client_id** field in json.
 
-## Change host and port (optional)
+## Change host and port
+**(optional)** <br>
 You can edit the default host and port by editing the last line of the **finalProject.py** file. `app.run(host='0.0.0.0', port=8100)`
 **Note:** While using vagrant make sure that you have your port set for port forwarding.<br>
 ex. In following example, you can access the application using http://127.0.0.1:8180 port on the host machine.
@@ -260,4 +262,4 @@ Vagrant.configure("2") do |config|
 ```
 
 ## Start Flask Server
-Execute **finalProject.py** with command **python finalProject.py** to run the Flask web server. In your browser visit http://localhost:&lt;port> (default is http://localhost:8100) to view the item catalog  app.  You should be able login with your email id and view, add, edit, and delete items and categories.
+Execute **finalProject.py** with command **python finalProject.py** to run the Flask web server. In your browser visit `http://localhost:<port>` (default is http://localhost:8100) to view the item catalog  app.  You should be able login with your email id and view, add, edit, and delete items and categories.
