@@ -1,8 +1,10 @@
+"""This module populates item catalog database with sample data"""
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from database_setup import Category, Base, Item, User
 
+# connect to the database
 engine = create_engine('sqlite:///itemcatalog.db')
 Base.metadata.bind = engine
 

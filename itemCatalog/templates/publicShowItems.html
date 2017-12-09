@@ -4,6 +4,8 @@
 		<header id="title-container">
 			<p>{{category.name}}</p>
 		</header>
+
+		<!-- display flash messages if any -->
 		{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			{% for message in messages %}
@@ -14,6 +16,8 @@
 			{% endfor %}
 		{% endif %}
 		{% endwith %}
+
+		<!-- display all items in a category -->
 			{% if items %}
 			<section id="item-list" class="course" style="justify-content: flex-start;">
 
@@ -26,6 +30,6 @@
 			</section>
 
 			{% else %}
-				<p>There are no items in menu.</p>
+				<p>There are no items in this category.</p>
 			{% endif %}
 {% endblock %}

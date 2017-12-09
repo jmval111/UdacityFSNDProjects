@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""This module creates a database with sqlalchemy"""
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -23,10 +24,12 @@ class Category(Base):
     name = Column(String(40), nullable=False)
     description = Column(String(120), nullable=True)
     id = Column(Integer, primary_key=True)
+    # when category is deleted delete corresponding items
     items = relationship('Item', cascade='delete')
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
+    # decorator to output object into Json format
     @property
     def serialize(self):
         return {
@@ -49,6 +52,7 @@ class Item(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
+    # decorator to output object into Json format
     @property
     def serialize(self):
         return {

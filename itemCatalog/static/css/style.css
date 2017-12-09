@@ -119,6 +119,8 @@ body{
 	font-size: 180%;
 }
 
+/* styling for forms */
+
 input[type=text], textarea {
     width: 100%;
     padding: 12px 20px;
@@ -160,6 +162,8 @@ input[type=submit]:hover {
     background-color: #f2f2f2;
     padding: 20px;
 }
+
+/* styling for flash messages */
 .alert {
     padding: 20px;
     background-color: #4CAF50;
@@ -188,6 +192,7 @@ input[type=submit]:hover {
 	text-align: center;
 }
 
+/* stlying adjustments for small screens */
 
 @media screen and (max-width: 600px) {
     body{

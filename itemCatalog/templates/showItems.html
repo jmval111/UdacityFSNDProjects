@@ -4,6 +4,8 @@
 		<header id="title-container">
 			<p>{{category.name}}</p>
 		</header>
+
+		<!-- category CRUD options -->
 		<div id="select-tab">
 			{% if logged_in_user_id and logged_in_user_id == category.user_id %}
 			<a id="new-item" href="{{url_for('addItem', category_id = category.id)}}">Add New Item</a>
@@ -11,6 +13,8 @@
 			<a id="delete-category" href="{{url_for('deleteCategory', category_id = category.id)}}">Delete Category</a>
 			{% endif %}
 		</div>
+
+		<!-- display flash messages if any -->
 		{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			{% for message in messages %}
@@ -21,6 +25,8 @@
 			{% endfor %}
 		{% endif %}
 		{% endwith %}
+
+		<!-- display items in a category -->
 			{% if items %}
 			<section id="item-list" class="course" style="justify-content: flex-start;">
 
@@ -39,6 +45,6 @@
 			</section>
 
 			{% else %}
-				<p>There are no items in menu.</p>
+				<p>There are no items in this category.</p>
 			{% endif %}
 {% endblock %}

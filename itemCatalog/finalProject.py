@@ -1,3 +1,4 @@
+"""This module is the flask application to serve, route http requests"""
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask import make_response, jsonify
 from sqlalchemy import create_engine
@@ -14,10 +15,12 @@ import requests
 
 app = Flask(__name__)
 
+# Load client secret details for Google OAuth API
 GOOGLE_CLIENT_ID = json.loads(
     open('google_client_secret.json', 'r').read())['web']['client_id']
 GOOGLE_APP_NAME = "Restaurant Menu Application"
 
+# connect to the database
 engine = create_engine('sqlite:///itemcatalog.db')
 Base.metadata.bind = engine
 
@@ -28,6 +31,7 @@ session = DBSession()
 @app.route('/')
 @app.route('/categories')
 def showCategories():
+    """serve all the available categories in database"""
     categories = session.query(Category).all()
     if 'username' not in login_session:
         return render_template("publicCategories.html", categories=categories)
@@ -36,6 +40,8 @@ def showCategories():
 
 @app.route('/category/add', methods=['GET', 'POST'])
 def addCategory():
+    """Process requests to add new category"""
+    # authentication
     if 'username' not in login_session:
         flash('Please login to add category')
         return redirect(url_for('showCategories'))
@@ -43,9 +49,11 @@ def addCategory():
     if request.method == 'POST':
         name = request.form['name']
         description = request.form['description']
+        # validation
         if not name:
             flash('Add CategoryError: Name can\'t be empty')
             return redirect(url_for('showCategories'))
+        # create operation
         newCategory = Category(name=name, description=description,
                                user_id=login_session['user_id'])
         session.add(newCategory)
@@ -53,26 +61,36 @@ def addCategory():
         flash('Added Category \'{}\' Successfully!'.format(newCategory.name))
         return redirect(url_for('showCategories'))
     else:
+        # serve GET request with form
         return render_template("addCategory.html")
 
 
 @app.route('/category/<int:category_id>/edit', methods=['GET', 'POST'])
 def editCategory(category_id):
+    """Process requests to edit existing category
+
+    arguments:
+    category_id(int)
+    """
+    # authentication
     if 'username' not in login_session:
         flash('Please login to edit category')
         return redirect(url_for('showCategories'))
 
+    # validation
     editedCategory = session.query(Category).filter_by(id=category_id).first()
     if not editedCategory:
         flash('Attempt to edit non-existent category')
         return redirect(url_for('showCategories'))
 
+    # authorization
     if login_session['user_id'] != editedCategory.user_id:
         flash('Sorry, you are not authorized to edit the category \'{}\''
               .format(editedCategory.name))
         return redirect(url_for('showItems', category_id=category_id))
 
     if request.method == 'POST':
+        # update operation
         if request.form['name']:
             editedCategory.name = request.form['name']
 
@@ -86,25 +104,35 @@ def editCategory(category_id):
             editedCategory.name))
         return redirect(url_for('showItems', category_id=category_id))
     else:
+        # serve GET requests with form
         return render_template("editCategory.html", category=editedCategory)
 
 
 @app.route('/category/<int:category_id>/delete', methods=['GET', 'POST'])
 def deleteCategory(category_id):
+    """Process requests to delete category
+
+    arguments:
+    category_id(int)
+    """
+    # authentication
     if 'username' not in login_session:
         flash('Please login to edit category')
         return redirect(url_for('showCategories'))
 
+    # validation
     deletedCategory = session.query(Category).filter_by(id=category_id).first()
     if not deletedCategory:
         flash('Attempt to delete non-existent category')
         return redirect(url_for('showCategories'))
 
+    # authorization
     if login_session['user_id'] != deletedCategory.user_id:
         flash('Sorry, you are not authorized to delete the category \'{}\''
               .format(deletedCategory.name))
         return redirect(url_for('showCategories'))
 
+    # delete operation
     if request.method == 'POST':
         session.delete(deletedCategory)
         session.commit()
@@ -112,17 +140,25 @@ def deleteCategory(category_id):
             deletedCategory.name))
         return redirect(url_for('showCategories'))
     else:
+        # serve GET requests with confirmation form
         return render_template("deleteCategory.html", category=deletedCategory)
 
 
 @app.route('/category/<int:category_id>', methods=['GET', 'POST'])
 @app.route('/category/<int:category_id>/items', methods=['GET', 'POST'])
 def showItems(category_id):
+    """Serve all items of the category
+
+    arguments:
+    category_id(int)
+    """
+    # validation
     category = session.query(Category).filter_by(id=category_id).first()
     if not category:
         flash('Attempt to view non-existent category')
         return redirect(url_for('showCategories'))
 
+    # authorization
     items = session.query(Item).filter_by(category_id=category_id).all()
     if 'username' not in login_session or\
             login_session['user_id'] != category.user_id:
@@ -135,16 +171,24 @@ def showItems(category_id):
 
 @app.route('/category/<int:category_id>/item/add', methods=['GET', 'POST'])
 def addItem(category_id):
+    """Process requests to add new item to existing category
+
+    arguments:
+    category_id(int)
+    """
+    # authentication
     if 'username' not in login_session:
         flash('Please login to add item')
         return redirect(url_for('showItems', category_id=category_id))
 
+    # validation
     category = session.query(Category).filter_by(id=category_id).first()
     if not category:
         flash('Attempted operation on non-existent category')
         return redirect(url_for('showCategories'))
 
     if request.method == 'POST':
+        # create operation
         name = request.form['name']
         description = request.form['description']
         if not name:
@@ -157,16 +201,25 @@ def addItem(category_id):
         flash('Added Item \'{}\' Successfully!'.format(newItem.name))
         return redirect(url_for('showItems', category_id=category_id))
     else:
+        # serve GET requests with the form
         return render_template("addItem.html", category=category)
 
 
 @app.route('/category/<int:category_id>/item/<int:item_id>/edit',
            methods=['GET', 'POST'])
 def editItem(category_id, item_id):
+    """Process requests to edit an item
+
+    arguments:
+    category_id(int)
+    item_id(int)
+    """
+    # authentication
     if 'username' not in login_session:
         flash('Please login to edit item')
         return redirect(url_for('showItems', category_id=category_id))
 
+    # validation
     category = session.query(Category).filter_by(id=category_id).first()
     if not category:
         flash('Attempted operation on non-existent category')
@@ -178,12 +231,14 @@ def editItem(category_id, item_id):
         flash('Attempt to edit non-existent item')
         return redirect(url_for('showItems', category_id=category_id))
 
+    # authorization
     if login_session['user_id'] != editedItem.user_id:
         flash('Sorry, you are not authorized to edit the item \'{}\''
               .format(editedItem.name))
         return redirect(url_for('showItems', category_id=category_id))
 
     if request.method == 'POST':
+        # update operation
         if request.form['name']:
             editedItem.name = request.form['name']
 
@@ -196,6 +251,7 @@ def editItem(category_id, item_id):
         flash('Edited Item \'{}\'  Successfully'.format(editedItem.name))
         return redirect(url_for('showItems', category_id=category_id))
     else:
+        # serve GET requests with the form
         return render_template("editItem.html",
                                category=category, item=editedItem)
 
@@ -203,10 +259,18 @@ def editItem(category_id, item_id):
 @app.route('/category/<int:category_id>/item/<int:item_id>/delete',
            methods=['GET', 'POST'])
 def deleteItem(category_id, item_id):
+    """Process requests to delete an item
+
+    arguments:
+    category_id(int)
+    item_id(int)
+    """
+    # authentication
     if 'username' not in login_session:
         flash('Please login to add item')
         return redirect(url_for('showItems', category_id=category_id))
 
+    # validation
     category = session.query(Category).filter_by(id=category_id).first()
     if not category:
         flash('Attempted operation on non-existent category')
@@ -218,25 +282,28 @@ def deleteItem(category_id, item_id):
         flash('Attempt to delete non-existent item')
         return redirect(url_for('showItems', category_id=category_id))
 
+    # authorization
     if login_session['user_id'] != deletedItem.user_id:
         flash('Sorry, you are not authorized to delete the item \'{}\''
               .format(deletedItem.name))
         return redirect(url_for('showItems', category_id=category_id))
 
     if request.method == 'POST':
+        # delete operation
         session.delete(deletedItem)
         session.commit()
         flash('Deleted Item \'{}\'  Successfully'.format(deletedItem.name))
         return redirect(url_for('showItems', category_id=category_id))
     else:
+        # serve GET requests with confirmation form
         return render_template("deleteItem.html",
                                category=deletedItem.category, item=deletedItem)
-
-# Create anti-forgery state token
 
 
 @app.route('/login')
 def showLogin():
+    """Serve login page for OAuth authentication"""
+    # crate anti-forgery state token
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
     login_session['state'] = state
@@ -245,7 +312,8 @@ def showLogin():
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
-
+    """validate and exchange authorization code from the client,
+     to get access token"""
     # Validate state token for CSFP
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
@@ -330,6 +398,7 @@ def gconnect():
 
     login_session['user_id'] = user_id
 
+    # welcome message
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -345,6 +414,7 @@ def gconnect():
 
 @app.route('/gdisconnect')
 def gdisconnect():
+    """revokes access token and cleans up login session data"""
     access_token = login_session.get('access_token')
     if access_token is None:
         print('Access Token is None')
@@ -371,6 +441,10 @@ def gdisconnect():
 
 
 def createUser(login_session):
+    """Helper funtion to create new user on first login
+    arguments:
+    login_session(Flask session.login_session)
+    """
     newUser = User(name=login_session['username'],
                    email=login_session['email'],
                    picture=login_session['picture'])
@@ -381,11 +455,13 @@ def createUser(login_session):
 
 
 def getUserInfo(user_id):
+    """Helper function to get existing user's details"""
     user = session.query(User).filter_by(id=user_id).one()
     return user
 
 
 def getUserID(email):
+    """helper funtion to get user.id using email"""
     try:
         user = session.query(User).filter_by(email=email).one()
         return user.id
@@ -393,14 +469,22 @@ def getUserID(email):
         return None
 
 
+# JSON Endpoint functions
+
+
 @app.route('/categories/JSON')
 def getCategoriesJSON():
+    """serves all the categories in JSON format"""
     categories = session.query(Category).all()
     return jsonify(Categories=[c.serialize for c in categories])
 
 
 @app.route('/category/<int:category_id>/JSON')
 def getCategoryJSON(category_id):
+    """serves requested category in JSON format
+    arguments:
+    category_id(int)
+    """
     category = session.query(Category).filter_by(id=category_id).first()
     if category:
         return jsonify(Category=category.serialize)
@@ -410,12 +494,21 @@ def getCategoryJSON(category_id):
 
 @app.route('/category/<int:category_id>/items/JSON')
 def getItemsJSON(category_id):
+    """serves all the items in the requested category, in JSON format
+    arguments:
+    category_id(int)
+    """
     items = session.query(Item).filter_by(category_id=category_id).all()
     return jsonify(Items=[i.serialize for i in items])
 
 
 @app.route('/category/<int:category_id>/item/<int:item_id>/JSON')
 def getItemJSON(category_id, item_id):
+    """serves requested item of the given category in JSON format
+    arguments:
+    category_id(int)
+    item_id(int)
+    """
     item = session.query(Item).filter_by(id=item_id,
                                          category_id=category_id).first()
     if item:
@@ -424,6 +517,7 @@ def getItemJSON(category_id, item_id):
         return jsonify(Item={})
 
 
+# start flask server
 if __name__ == '__main__':
     app.debug = True
     app.secret_key = '\x87{\xfc\xc9\x94\x10.\x12$R\x1b\x8d\x8a\xe2\x81\x82'

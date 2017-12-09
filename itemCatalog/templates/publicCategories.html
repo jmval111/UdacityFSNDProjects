@@ -4,6 +4,8 @@
 		<div id="title-container">
 			<p>Categories</p>
 		</div>
+
+		<!-- display flash messages if any -->
 		{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			{% for message in messages %}
@@ -14,6 +16,8 @@
 			{% endfor %}
 		{% endif %}
 		{% endwith %}
+
+		<!-- display all categories -->
 		<div id="item-list">
 			{% if categories %}
 				{% for category in categories %}

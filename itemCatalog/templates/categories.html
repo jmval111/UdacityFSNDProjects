@@ -5,6 +5,8 @@
 			<p>Categories</p>
 		</div>
 		<p id="select-tab"><a id="new-item" href="{{url_for('addCategory')}}">Create New Category</a></p>
+
+		<!-- display flash messages if any -->
 		{% with messages = get_flashed_messages() %}
 		{% if messages %}
 			{% for message in messages %}
@@ -15,6 +17,8 @@
 			{% endfor %}
 		{% endif %}
 		{% endwith %}
+
+		<!-- display all categories -->
 		<div id="item-list">
 			{% if categories %}
 				{% for category in categories %}
