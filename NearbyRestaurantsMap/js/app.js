@@ -47,14 +47,16 @@ var RestaurantViewModel = function(){
 
   self.alertMessage = ko.observable('');
   self.availableRestaurants = ko.observableArray([]);
+
+  // for filter values
   self.selectedRestaurant = ko.observable();
   self.availableCuisines = ko.observableArray();
   self.selectedCuisine = ko.observable("all");
-  //for later use in cost filter
   self.availableMinCost = ko.observable(0);
   self.availableMaxCost = ko.observable(0);
   self.selectedMaxCost = ko.observable(0);
   self.selectedMinRating = ko.observable(0);
+
   //update filteredLocations as per selected filters
   self.filteredRestaurants = ko.computed(function(){
     return self.availableRestaurants().filter(function(restaurant){
@@ -68,13 +70,7 @@ var RestaurantViewModel = function(){
     });
   });
 
-  self.highlightMarkers = function(){
-    if(self.selectedRestaurant()){
-        markerSelected(self.selectedRestaurant());
-    }
-  }
-
-  //filter markers
+  //filter markers from map when filteredRestaurants changes
   self.filteredRestaurants.subscribe(function(){
       clearMarkers();
       //display only filtered markers
@@ -85,7 +81,7 @@ var RestaurantViewModel = function(){
       }
     });
 
-  //restaurants list independent controls
+  // for zoom in text
   self.zoom_in_text = ko.observable();
 
   // This function takes the input value in the find nearby area text input
@@ -181,26 +177,32 @@ var RestaurantViewModel = function(){
   };
 
   self.clearSearch = function(){
+    // clears all the markers and search results
+
     clearMarkers();
     clearViewModel();
+
     //remove circle if any
     if(circle){
       circle.setMap(null);
       circle = null;
     }
+
+    // keep drawing manager ON by default for convenience
     if(!drawingManager.map){
       drawingManager.setMap(map);
     }
     drawingManager.setDrawingMode(google.maps.drawing.OverlayType.CIRCLE);
+    restoViewModel.isDrawingMode(true);
 
-    //reset min max
+    //reset filter values
     restoViewModel.availableMinCost(0);
     restoViewModel.availableMaxCost(0);
     restoViewModel.selectedMaxCost(0);
     restoViewModel.selectedMinRating(0);
   };
 
-  //to control filters control panel
+  //hide filter panel
   self.showFilters = ko.observable(false);
   self.toggleShowFilters = function(){
     self.showFilters(!self.showFilters());
@@ -252,6 +254,7 @@ function initMap() {
     }
   });
 
+  //let user start search when map is loaded
   map.addListener('tilesloaded', function(){
     console.log('tilesloaded');
     isMapVisible=true;
@@ -260,6 +263,7 @@ function initMap() {
   );
 
   infowindow = new google.maps.InfoWindow();
+
   // Initialize the drawing manager.
   drawingManager = new google.maps.drawing.DrawingManager({
     drawingMode: google.maps.drawing.OverlayType.CIRCLE,
@@ -285,14 +289,29 @@ function initMap() {
   circle.setEditable(true);
  });
 
+ // show initial locations by default
+ restoViewModel.isSearchMode(false);
+
+ circle = new google.maps.Circle({
+                                     center: new google.maps.LatLng(map.getCenter().lat(), map.getCenter().lng()),
+                                     radius: 380,
+                                     map: map
+                                     });
+ fetchRestaurantsInCircle(map.getCenter().lat(),map.getCenter().lng(),400,displayRestaurants, ajaxErrorHandler);
 }//ENDED initMap
 
 //Animate selected marker and show details of restaurant
 function markerSelected(selectedLocn){
+
+  //set all markers color to orange
   for(var i=0; i<restoViewModel.markers.length;i++){
     restoViewModel.markers[i].setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
   }
+
+  //get the selected marker
   let markersArr = $.grep(restoViewModel.markers, function(m){ return m.id === selectedLocn.id; })
+
+  //if marker found set selected marker color to yellow, animate and show info window
   if(markersArr.length>0){
     let marker = markersArr[0];
     marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
@@ -341,6 +360,7 @@ function markerSelected(selectedLocn){
 
 
 function clearMarkers(){
+  // removes all markers from the map
   let total_markers = restoViewModel.availableRestaurants().length;
   console.log('clearMarkers:'+total_markers);
   for(var i=0;i<total_markers;i++){
@@ -349,6 +369,7 @@ function clearMarkers(){
 }
 
 function clearViewModel(){
+  //clears all the view model data
   console.log('clearViewModel');
   restoViewModel.showFilters(false);
   restoViewModel.isSearchMode(true);
@@ -368,6 +389,8 @@ function displayRestaurants(data){
     console.log("populating viewModel and markers");
     var currRestaurant = new Restaurant(data.restaurants[i].restaurant);
     console.log(currRestaurant);
+
+    // if the location is within the drawn circle, then only add to list
     isWithinCircle = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(currRestaurant.lat,currRestaurant.lng), circle.getCenter()) <= circle.getRadius();
 
     if(isWithinCircle){
@@ -379,6 +402,7 @@ function displayRestaurants(data){
         marker.id = currRestaurant.id;
         //locationList.push(locationItem);
 
+        // animate marker when clicked
         google.maps.event.addListener(marker, 'click', function() {
           return markerSelected(this);
         }.bind(currRestaurant));
@@ -390,6 +414,7 @@ function displayRestaurants(data){
             allCuisines.add(currRestaurant.cuisines[c]);
         }
 
+        // recalculate new min max filter values
         restoViewModel.availableMaxCost(Math.max(restoViewModel.availableMaxCost(),currRestaurant.average_cost_for_two));
         if(!initMinCost){
           restoViewModel.availableMinCost(currRestaurant.average_cost_for_two);
@@ -402,6 +427,7 @@ function displayRestaurants(data){
       }
   }//populated places and markers
 
+  //display success and center the map around drawn circle
   let count_restaurants = restoViewModel.availableRestaurants().length;
   if(count_restaurants>0){
     console.log("Restaurants found:"+count_restaurants);
@@ -410,7 +436,7 @@ function displayRestaurants(data){
     //var sortedCuisines = Array.from(allCuisines).sort();
     //IE doesnt support Array.from, even polyfill didnt work
     let sortedCuisines = [];
-    //for(let item of allCuisines){sortedCuisines.push(item);};
+
     allCuisines.forEach(function(value) {
       sortedCuisines.push(value);
     });
@@ -421,6 +447,8 @@ function displayRestaurants(data){
     restoViewModel.selectedMaxCost(restoViewModel.availableMaxCost());
     //to tackle issue:ko doesn't adjust range pointer to end
     $('#maxcost').attr('max',restoViewModel.selectedMaxCost());
+
+    //center map around the drawn circle
     map.setCenter(circle.getCenter());
     map.fitBounds(circle.getBounds());
   }
@@ -431,6 +459,12 @@ function displayRestaurants(data){
 }
 
 function setAlertMessage(msg, msgType){
+  /* displays an alert message on the screen
+  arguments:
+  msg(string): message to display
+  msgType(string): One of the predefined types (DEFAULT,INFO,INPROGRESS, SUCCESS,ERROR)
+   or will be set to DEFAULT
+  */
   let newAlert = {
     message: msg,
     type: (restoViewModel.alertType[msgType]?Object.assign({}, restoViewModel.alertType[msgType]):
@@ -440,6 +474,7 @@ function setAlertMessage(msg, msgType){
 }
 
 function ajaxErrorHandler(xhr, error){
+  // call back to process various ajax readyStates
   console.log('ajaxErrorHandler status='+xhr.status+", readyState="+xhr.readyState)
 
   if(xhr.readyState == 0 && (typeof xhr.status === 'undefined')){
