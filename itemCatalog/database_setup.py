@@ -8,8 +8,8 @@ from sqlalchemy import create_engine
 Base = declarative_base()
 
 
-class User(Base):
-    __tablename__ = 'user'
+class User_info(Base):
+    __tablename__ = 'user_info'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
@@ -26,8 +26,8 @@ class Category(Base):
     id = Column(Integer, primary_key=True)
     # when category is deleted delete corresponding items
     items = relationship('Item', cascade='delete')
-    user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+    user_id = Column(Integer, ForeignKey('user_info.id'))
+    user_info = relationship(User_info)
 
     # decorator to output object into Json format
     @property
@@ -49,8 +49,8 @@ class Item(Base):
     id = Column(Integer, primary_key=True)
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
-    user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+    user_id = Column(Integer, ForeignKey('user_info.id'))
+    user_info = relationship(User_info)
 
     # decorator to output object into Json format
     @property

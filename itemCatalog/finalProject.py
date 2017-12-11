@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask import make_response, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, Item, User
+from database_setup import Base, Category, Item, User_info
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -445,25 +445,26 @@ def createUser(login_session):
     arguments:
     login_session(Flask session.login_session)
     """
-    newUser = User(name=login_session['username'],
-                   email=login_session['email'],
-                   picture=login_session['picture'])
+    newUser = User_info(name=login_session['username'],
+                        email=login_session['email'],
+                        picture=login_session['picture'])
     session.add(newUser)
     session.commit()
-    user = session.query(User).filter_by(email=login_session['email']).one()
+    user = session.query(User_info).\
+        filter_by(email=login_session['email']).one()
     return user.id
 
 
 def getUserInfo(user_id):
     """Helper function to get existing user's details"""
-    user = session.query(User).filter_by(id=user_id).one()
+    user = session.query(User_info).filter_by(id=user_id).one()
     return user
 
 
 def getUserID(email):
     """helper funtion to get user.id using email"""
     try:
-        user = session.query(User).filter_by(email=email).one()
+        user = session.query(User_info).filter_by(email=email).one()
         return user.id
     except Exception as e:
         return None

@@ -2,7 +2,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from database_setup import Category, Base, Item, User
+from database_setup import Category, Base, Item, User_info
 
 # connect to the database
 engine = create_engine('sqlite:///itemcatalog.db')
@@ -11,7 +11,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-user1 = User(name="Viraj", email="xyz@gmail.com")
+user1 = User_info(name="Viraj", email="xyz@gmail.com")
 session.add(user1)
 session.commit()
 # Category: Cricket
