@@ -20,7 +20,7 @@ Goal of this project is to take a baseline installation of a Linux distribution 
 
 
 # Amazon LightSail
-This project uses virtual private server () provided by Amazon LightSail.
+This project uses virtual private server (Ubuntu instance) provided by Amazon LightSail.
 [Reference](https://amazonlightsail.com)
 
 ## LightSail Instance Setup
