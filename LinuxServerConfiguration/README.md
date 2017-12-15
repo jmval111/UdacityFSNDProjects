@@ -2,7 +2,7 @@
 Goal of this project is to take a baseline installation of a Linux distribution on a virtual machine and prepare it to host WSGI web applications, to include installing updates, securing it from a number of attack vectors and installing/configuring web and database servers.
 
 # Contents
-- [Amazon LightSail](# amazon-lightsail)
+- [Amazon LightSail](#amazon-lightsail)
   - [LightSail Instance Setup](#lightsail-instance-setup)
 - [IP address and SSH port](#ip-address-and-ssh-port)
 - [Hosted Apps URL](#hosted-apps-url)
@@ -35,7 +35,7 @@ Once your instance has started up, you can log into it with SSH from your browse
 The public IP address of the instance is displayed along with its name.[Lightsail document to connect using putty](https://lightsail.aws.amazon.com/ls/docs/how-to/article/lightsail-how-to-set-up-putty-to-connect-using-ssh)
 
 # IP address and SSH port
-Server IP: 35.154.170.92
+Server IP: 35.154.170.92,
 SSH PORT: 2200
 
 # Hosted Apps URL
