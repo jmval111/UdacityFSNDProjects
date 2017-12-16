@@ -17,10 +17,14 @@ Goal of this project is to take a baseline installation of a Linux distribution 
   - [Setup to host app](#setup-to-host-app)
   - [Additional steps for apps](#additional-steps-for-apps)
   - [Set localtimezone to UTC](#set-localtimezone-to-utc)
+- [Additional Config Changes](#additional-config-changes)
+  - [Auto update system packages](#auto-update-system-packages)
+  - [Server Monitoring](#server-monitoring)
+  - [fail2ban](#fail2ban)
 
 
 # Amazon LightSail
-This project uses virtual private server (Ubuntu instance) provided by Amazon LightSail.
+This project uses virtual private server (Ubuntu 16.04.3 LTS) provided by Amazon LightSail.
 [Reference](https://amazonlightsail.com)
 
 ## LightSail Instance Setup
@@ -158,3 +162,56 @@ restart apache
 ```
  ln -sf /usr/share/zoneinfo/UTC /etc/localtime
  ```
+
+# Additional Config Changes
+## Auto update system packages
+```
+sudo apt-get install unattended-upgrades
+sudo dpkg-reconfigure --priority=low unattended-upgrades
+```
+check the logs at
+```
+sudo less /var/log/unattended-upgrades/unattended-upgrades.log
+```
+
+## Server monitoring
+Follow the steps for munin on [digitalocean](https://www.digitalocean.com/community/tutorials/how-to-install-the-munin-monitoring-tool-on-ubuntu-14-04
+http://35.154.170.92/munin/)
+
+## fail2ban
+**NOTE:** Couldn't get it started yet<br>
+**ERROR:** Output of `sudo journalctl -xe`<br>
+failing to restart
+fail2ban  -  a  set  of server and client programs to limit brute force
+       authentication attempts.
+```
+sudo apt-get install fail2ban
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+sudo vi /etc/fail2ban/jail.local
+```
+
+Updated/uncommented following lines in jail.local
+
+```
+[sshd]
+enabled = true
+
+[DEFAULT]
+# "bantime" is the number of seconds that a host is banned.
+bantime  = 600
+
+# A host is banned if it has generated "maxretry" during the last "findtime"
+# seconds.
+findtime  = 5
+
+# "maxretry" is the number of failures before a host get banned.
+maxretry = 2
+
+[sshd]
+
+port    = 2200
+logpath = /var/log/auth.log
+```
+
+restart service
+`sudo service fail2ban restart`
