@@ -175,15 +175,13 @@ sudo less /var/log/unattended-upgrades/unattended-upgrades.log
 ```
 
 ## Server monitoring
-Follow the steps for munin on [digitalocean](https://www.digitalocean.com/community/tutorials/how-to-install-the-munin-monitoring-tool-on-ubuntu-14-04
-http://35.154.170.92/munin/)
+Follow the steps for munin on [digitalocean](https://www.digitalocean.com/community/tutorials/how-to-install-the-munin-monitoring-tool-on-ubuntu-14-04)
 
 ## fail2ban
 **NOTE:** Couldn't get it started yet<br>
 **ERROR:** Output of `sudo journalctl -xe`<br>
-failing to restart
-fail2ban  -  a  set  of server and client programs to limit brute force
-       authentication attempts.
+ fail2ban.service: Start request repeated too quickly<br>
+Failed to start Fail2Ban Service.
 ```
 sudo apt-get install fail2ban
 sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
